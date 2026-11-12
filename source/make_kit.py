@@ -16,9 +16,29 @@ NOTES_LONG = ("Independent tutorial, not affiliated with n8n, Ollama or any AI p
               "and every result shown (including the mistakes) is the real output of the llama3.2:3b model. Narration is a synthetic voice (Filipino text-to-speech) and the presenter is a cartoon. "
               "The model is small and sometimes confused; use a larger model for more reliable results.")
 
-LINKS = [("PLAYLIST", "Playlist link"), ("WORKFLOW", "Workflow JSON + system message link (GitHub)"), ("NEXT", "Part 2 link (Telegram bot, when it exists)")]
+LINKS = [("PLAYLIST", "Playlist link"), ("VIDEO0", "Video 0 link (installation guide)"), ("VIDEO1", "Video 1 link (AI agent tutorial)"), ("NEXT", "Part 2 link (Telegram bot, when it exists)")]
 
 ITEMS = [
+    dict(id="00", kind="long", video="videos/00_n8n-installation-guide-tagalog.mp4", thumb="thumbnails/00_n8n-installation-guide-tagalog.png",
+         chapters="chapters/00_n8n-installation-guide-tagalog.txt", name="Video 0: How to Install n8n Locally on Windows 11 (Tagalog)",
+         title="How to Install n8n Locally on Windows 11 (Tagalog): Free Setup with Ollama, No Docker",
+         hook="Learn how to install n8n on Windows 11 step by step (Tagalog): Node.js, n8n, Ollama and your local account, free and without Docker.",
+         learn=["Which Node.js version n8n 2.47.5 needs (24 or newer) and how to check it", "How to install and start n8n with npm, and what to do when it says it is starting up",
+                "How to install Ollama and download the llama3.2:3b model (2 GB), with a check that it answers on 127.0.0.1",
+                "How to create your local n8n owner account, how to open n8n again later, and what to do if you forget the password"],
+         resources=["Node.js: https://nodejs.org/en/download", "Ollama: https://ollama.com/download", "n8n: https://n8n.io",
+                    "Playlist: " + SERIES + ": {{PLAYLIST}}", "Next, build the AI agent: {{VIDEO1}}"],
+         notes=("Independent guide, not affiliated with n8n, Node.js or Ollama. The download pages and the account form are real captures (the form is shown empty; you create your own account), "
+                "and the commands and outputs are the real ones from my Windows 11 PC (7 GB RAM, no graphics card). I tested n8n 2.47.5 on Node.js 24.19.0 and did not test Node.js 26. "
+                "Install times and speeds depend on your computer and internet. Narration is a synthetic voice (Filipino text-to-speech) and the presenter is a cartoon."),
+         hashtags="#n8n #Ollama #Tagalog",
+         tags=["how to install n8n locally on windows 11", "n8n install windows free", "n8n setup tagalog", "install n8n without docker", "how to install ollama on windows 11",
+               "n8n installation guide", "n8n tutorial for beginners tagalog", "install node js windows 11", "SirYuls TV"],
+         pinned="Commands from the video:\nnode -v   (must be 24 or newer)\nnpm install n8n\nnpx n8n start   (open http://localhost:5678)\nollama pull llama3.2:3b\nOllama address in n8n: http://127.0.0.1:11434\n"
+                "Stuck? Tell me which step and what you see. Next: build the AI agent: {{VIDEO1}}",
+         settings=["Add to the playlist as video 0 (first)", "Not made for kids", "Altered or synthetic content: yes (synthetic voice, cartoon presenter)",
+                   "End screen (last 15 to 20 s): Video 1 (the AI agent tutorial), plus Subscribe. The right half of the last slide is clear",
+                   "Upload the thumbnail and captions/ .srt (Subtitles, English)", "Set the Related video of each Short to this video"]),
     dict(id="01", kind="long", video="videos/01_n8n-ai-agent-tutorial-tagalog.mp4", thumb="thumbnails/01_n8n-ai-agent-tutorial-tagalog.png",
          chapters="chapters/01_n8n-ai-agent-tutorial-tagalog.txt", name="Video 1: n8n AI Agent Tutorial for Beginners (Tagalog)",
          title="n8n AI Agent Tutorial for Beginners (Tagalog): Build an AI Assistant That Uses Tools",
@@ -26,13 +46,13 @@ ITEMS = [
          learn=["The difference between a chatbot, a workflow and an AI agent", "Chat Trigger, AI Agent and Ollama Chat Model nodes, with no API key",
                 "Why a vague system message gives a wrong answer (2414.72) and a clear one gives the right one (2250.08)",
                 "Simple Memory, so the agent remembers the conversation, and how to read the Executions log"],
-         resources=["Workflow JSON and the system message (copy-paste): {{WORKFLOW}}", "Playlist: " + SERIES + ": {{PLAYLIST}}", "Next, Part 2: connect the agent to Telegram: {{NEXT}}",
+         resources=["Not installed yet? Setup guide: {{VIDEO0}}", "Workflow JSON and the system message (copy-paste): https://github.com/JustYuls/n8n-ai-agent-tutorial/tree/main/workflow", "Playlist: " + SERIES + ": {{PLAYLIST}}", "Next, Part 2: connect the agent to Telegram: {{NEXT}}",
                     "n8n: https://n8n.io    Ollama: https://ollama.com"],
          notes=NOTES_LONG, hashtags="#n8n #AIAgent #Tagalog",
          tags=["n8n ai agent tutorial", "n8n tutorial for beginners tagalog", "ai agent tutorial tagalog", "n8n tutorial", "n8n ai agent", "n8n chat trigger",
                "ai automation tagalog", "free ai agent no api key", "SirYuls TV"],
          pinned="Workflow file and the full system message are in the description. The model is small, so it sometimes gets confused; a larger model is more reliable. "
-                "Which tool should I add to the agent next? Tell me below. Next: connect it to Telegram: {{NEXT}}",
+                "Which tool should I add to the agent next? Tell me below. Not installed yet? Setup guide: {{VIDEO0}}  Next: connect it to Telegram: {{NEXT}}",
          settings=["Add to the playlist as video 1", "Not made for kids", "Altered or synthetic content: yes (synthetic voice, cartoon presenter)",
                    "End screen (last 15 to 20 s): the playlist or Part 2 when it exists, plus Subscribe. The right half of the last slide is clear",
                    "Upload the thumbnail and captions/ .srt (Subtitles, English). The narration is Taglish, so also upload it as the Filipino/English caption track if you prefer",
@@ -43,7 +63,7 @@ ITEMS = [
 PLAYLIST = dict(
     title=SERIES,
     description=("Learn n8n step by step in Tagalog: build AI agents, connect them to Telegram and Google Sheets, and automate your study or work.\n\n"
-                 "Watch in order:\n1. n8n AI Agent Tutorial for Beginners (Tagalog)\n2. n8n Telegram AI Bot (coming soon)\n3. n8n AI Agent with Google Sheets (coming soon)\n\n" + NOTES_LONG),
+                 "Watch in order:\n0. How to Install n8n Locally on Windows 11 (Tagalog)\n1. n8n AI Agent Tutorial for Beginners (Tagalog)\n2. n8n Telegram AI Bot (coming soon)\n3. n8n AI Agent with Google Sheets (coming soon)\n\n" + NOTES_LONG),
 )
 
 

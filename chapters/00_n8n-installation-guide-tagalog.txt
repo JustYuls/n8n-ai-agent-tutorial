@@ -1,0 +1,9 @@
+0:00 Ano ang makukuha mo sa video na ito
+0:23 Ano ang kailangan at ang plano
+0:55 Hakbang 1: i-install ang Node.js
+1:50 Hakbang 2: i-install ang n8n
+3:01 Hakbang 3: i-install ang Ollama at ang model
+4:09 Hakbang 4: gumawa ng local na n8n account
+5:08 Pause and try, sign in, at nakalimutang password
+6:30 Final check: kumonekta ang n8n sa Ollama
+7:05 Handa ka na: susunod, ang AI agent

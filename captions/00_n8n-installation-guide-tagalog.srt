@@ -1,0 +1,444 @@
+1
+00:00:00,350 --> 00:00:05,415
+Sa video na ito, mai-install mo ang n8n sa Windows, kasama ang Node.
+
+2
+00:00:05,415 --> 00:00:10,107
+js at Ollama, at gagawa ka ng sarili mong local na n8n account.
+
+3
+00:00:10,107 --> 00:00:13,533
+Libre lahat, walang Docker, at walang API key.
+
+4
+00:00:13,533 --> 00:00:22,694
+Pagkatapos nito, bukas na ang n8n editor sa browser mo, nasa computer mo ang AI model, at handa ka nang gumawa ng AI agent.
+
+5
+00:00:23,544 --> 00:00:25,320
+Bago tayo magsimula.
+
+6
+00:00:25,320 --> 00:00:31,534
+Ang kailangan mo ay Windows 10 o 11, at internet para sa mga download.
+
+7
+00:00:31,534 --> 00:00:36,240
+Sa PC ko, 7 gigabytes ng RAM at walang graphics card.
+
+8
+00:00:36,240 --> 00:00:42,010
+Gumagana ito, pero mabagal: mga 30 segundo ang bawat sagot ng AI.
+
+9
+00:00:42,010 --> 00:00:44,940
+Ang AI model lang ay 2 gigabytes.
+
+10
+00:00:44,940 --> 00:00:47,781
+Apat na hakbang tayo: una, Node.
+
+11
+00:00:47,781 --> 00:00:48,047
+js.
+
+12
+00:00:48,047 --> 00:00:49,379
+Pangalawa, n8n.
+
+13
+00:00:49,379 --> 00:00:52,042
+Pangatlo, Ollama at ang model.
+
+14
+00:00:52,042 --> 00:00:55,416
+At pang-apat, ang local na account mo.
+
+15
+00:00:56,266 --> 00:00:57,941
+Hakbang isa: Node.
+
+16
+00:00:57,941 --> 00:00:58,221
+js.
+
+17
+00:00:58,221 --> 00:00:59,896
+Pumunta sa nodejs.
+
+18
+00:00:59,896 --> 00:01:04,829
+org, slash en, slash download, at piliin ang Windows.
+
+19
+00:01:04,829 --> 00:01:06,783
+Ang n8n na version 2.
+
+20
+00:01:06,783 --> 00:01:07,063
+47.
+
+21
+00:01:07,063 --> 00:01:11,065
+5 ay nangangailangan ng Node 24 o mas bago.
+
+22
+00:01:11,065 --> 00:01:12,833
+Ang gamit ko ay 24.
+
+23
+00:01:12,833 --> 00:01:13,113
+19.
+
+24
+00:01:13,113 --> 00:01:13,299
+0.
+
+25
+00:01:13,299 --> 00:01:18,511
+Sa araw ng pag-record ko, ang page ay nagpapakita ng 26.
+
+26
+00:01:18,511 --> 00:01:18,790
+13.
+
+27
+00:01:18,790 --> 00:01:19,628
+1 na LTS.
+
+28
+00:01:19,628 --> 00:01:27,911
+Hindi ko pa ito nasubukan, kaya kung gusto mong sigurado, piliin ang Node 24 sa dropdown.
+
+29
+00:01:27,911 --> 00:01:33,682
+Sundin ang mga command o ang installer na ipinapakita ng page.
+
+30
+00:01:34,532 --> 00:01:41,539
+Para i-check, buksan ang PowerShell at i-type ang node dash v.
+
+31
+00:01:41,539 --> 00:01:45,382
+Dapat 24 o mas mataas ang lumabas.
+
+32
+00:01:45,382 --> 00:01:46,851
+Sa akin: v24.
+
+33
+00:01:46,851 --> 00:01:47,190
+19.
+
+34
+00:01:47,190 --> 00:01:47,416
+0.
+
+35
+00:01:47,416 --> 00:01:49,903
+At ang npm dash v: 11.
+
+36
+00:01:49,903 --> 00:01:50,242
+17.
+
+37
+00:01:50,242 --> 00:01:50,468
+0.
+
+38
+00:01:51,318 --> 00:01:53,324
+Hakbang dalawa: n8n.
+
+39
+00:01:53,324 --> 00:02:01,647
+Gumawa ng folder, halimbawa n8n-local, pumasok dito, at i-type ang npm install n8n.
+
+40
+00:02:01,647 --> 00:02:07,364
+Inabot ito ng 13 minuto sa PC ko, at walang progress bar.
+
+41
+00:02:07,364 --> 00:02:10,874
+Normal iyon, kaya huwag mong isara.
+
+42
+00:02:10,874 --> 00:02:13,782
+Sa dulo: added 2259 packages.
+
+43
+00:02:14,632 --> 00:02:19,366
+I-check ang version: npx n8n dash dash version.
+
+44
+00:02:19,366 --> 00:02:20,473
+Sa akin, 2.
+
+45
+00:02:20,473 --> 00:02:20,776
+47.
+
+46
+00:02:20,776 --> 00:02:20,977
+5.
+
+47
+00:02:20,977 --> 00:02:25,912
+Ito ang version na gamit sa lahat ng video natin.
+
+48
+00:02:26,762 --> 00:02:33,697
+Ngayon, patakbuhin ito: npx n8n start, sa loob ng folder kung saan mo ini-install.
+
+49
+00:02:33,697 --> 00:02:41,731
+Hintayin ang linyang Editor is now accessible via, http colon slash slash localhost colon 5678.
+
+50
+00:02:41,731 --> 00:02:48,074
+Ang unang takbo ay inaabot ng ilang minuto, dahil ginagawa pa ang database.
+
+51
+00:02:48,924 --> 00:02:55,613
+Kung buksan mo agad ang browser, baka ito ang makita mo: n8n is starting up, please wait.
+
+52
+00:02:55,613 --> 00:02:56,816
+Hindi ito error.
+
+53
+00:02:56,816 --> 00:03:01,476
+Maghintay ka lang, at mag-refresh pagkalipas ng ilang segundo.
+
+54
+00:03:02,326 --> 00:03:03,873
+Hakbang tatlo: Ollama.
+
+55
+00:03:03,873 --> 00:03:05,140
+Pumunta sa ollama.
+
+56
+00:03:05,140 --> 00:03:08,094
+com slash download, at piliin ang Windows.
+
+57
+00:03:08,094 --> 00:03:14,424
+May PowerShell na command na ipapa-paste nila, at may Download manually para sa installer.
+
+58
+00:03:14,424 --> 00:03:18,082
+Para sa baguhan, mas ligtas ang manual na installer.
+
+59
+00:03:18,082 --> 00:03:24,694
+At tandaan: huwag kang mag-paste ng kahit anong script sa PowerShell kung hindi mo ito kilala.
+
+60
+00:03:25,544 --> 00:03:32,559
+Pagkatapos ng installer, i-check ang version: ollama dash dash version.
+
+61
+00:03:32,559 --> 00:03:33,646
+Sa akin, 0.
+
+62
+00:03:33,646 --> 00:03:33,943
+40.
+
+63
+00:03:33,943 --> 00:03:34,239
+16.
+
+64
+00:03:34,239 --> 00:03:38,883
+Tapos i-download ang model: ollama pull llama3.
+
+65
+00:03:38,883 --> 00:03:39,970
+2 colon 3b.
+
+66
+00:03:39,970 --> 00:03:45,207
+Mga 2 gigabytes ito, kaya nakadepende sa internet mo.
+
+67
+00:03:45,207 --> 00:03:51,234
+Kapag success, i-type ang ollama list, at lalabas ang llama3.
+
+68
+00:03:51,234 --> 00:03:51,728
+2:3b.
+
+69
+00:03:52,578 --> 00:03:59,295
+Isa pang check: ang Ollama ay sumasagot sa address na 127.
+
+70
+00:03:59,295 --> 00:03:59,526
+0.
+
+71
+00:03:59,526 --> 00:03:59,758
+0.
+
+72
+00:03:59,758 --> 00:04:01,263
+1 port 11434.
+
+73
+00:04:01,263 --> 00:04:09,138
+Mahalaga ito mamaya, dahil ito ang address na ilalagay natin sa n8n.
+
+74
+00:04:09,988 --> 00:04:12,033
+Hakbang apat: ang account.
+
+75
+00:04:12,033 --> 00:04:20,135
+Buksan ang browser sa http colon slash slash localhost colon 5678, at lalabas ang Set up owner account.
+
+76
+00:04:20,135 --> 00:04:25,405
+Ilagay ang email, kahit anong email, dahil sa computer mo lang ito.
+
+77
+00:04:25,405 --> 00:04:28,079
+Tapos ang first name at last name.
+
+78
+00:04:28,079 --> 00:04:35,630
+Ang password ay walong characters o higit pa, na may kahit isang number at isang capital letter.
+
+79
+00:04:35,630 --> 00:04:40,035
+May checkbox para sa updates, i-uncheck mo kung ayaw mo.
+
+80
+00:04:40,035 --> 00:04:42,316
+Pagkatapos, i-click ang Next.
+
+81
+00:04:43,166 --> 00:04:44,535
+Tatlong paalala.
+
+82
+00:04:44,535 --> 00:04:50,779
+Una, gumamit ng password na maaalala mo, at ikaw mismo ang mag-type nito.
+
+83
+00:04:50,779 --> 00:04:52,917
+Huwag mong ibigay sa iba.
+
+84
+00:04:52,917 --> 00:04:58,563
+Pangalawa, ang account na ito ay nasa computer mo, hindi sa cloud.
+
+85
+00:04:58,563 --> 00:05:03,609
+At pangatlo, huwag mong i-expose ang port 5678 sa internet.
+
+86
+00:05:03,609 --> 00:05:07,886
+Sa video na ito, sa computer mo lang ito bubuksan.
+
+87
+00:05:08,736 --> 00:05:09,904
+Pause and try.
+
+88
+00:05:09,904 --> 00:05:12,741
+Gawin mo na ang account mo ngayon.
+
+89
+00:05:12,741 --> 00:05:17,496
+I-pause ang video kung kailangan mo ng mas mahabang oras.
+
+90
+00:05:30,346 --> 00:05:36,456
+Pagkatapos mag-sign in, ito ang makikita mo: ang workflow editor, na may Add first step.
+
+91
+00:05:36,456 --> 00:05:41,386
+Ito ang lugar kung saan natin gagawin ang AI agent sa susunod na video.
+
+92
+00:05:42,236 --> 00:05:44,065
+Nakalimutan ang password?
+
+93
+00:05:44,065 --> 00:05:50,867
+I-stop muna ang n8n gamit ang Control C, tapos i-run ang npx n8n user-management colon reset.
+
+94
+00:05:50,867 --> 00:05:56,500
+Sa akin, ang sagot ay: Successfully reset the database to default user state.
+
+95
+00:05:56,500 --> 00:06:01,108
+Babalik ang Set up owner account, at pwede kang gumawa ng bago.
+
+96
+00:06:01,108 --> 00:06:04,034
+Ginamit ko ito noong wala pang workflow.
+
+97
+00:06:04,034 --> 00:06:14,348
+Hindi ko sinubukan kung ano ang mangyayari sa mga workflow na naka-save na, kaya basahin muna ang docs ng n8n kung may mahalaga ka nang gawa.
+
+98
+00:06:15,198 --> 00:06:26,331
+Para buksan ulit ang n8n sa susunod: pumasok sa folder, patakbuhin ang npx n8n start, at buksan ang localhost 5678.
+
+99
+00:06:26,331 --> 00:06:29,526
+Mag-sign in gamit ang account mo.
+
+100
+00:06:30,376 --> 00:06:33,760
+Final check: kumonekta ba ang n8n sa Ollama?
+
+101
+00:06:33,760 --> 00:06:36,759
+Sa n8n, gagawa ka ng Ollama credential.
+
+102
+00:06:36,759 --> 00:06:44,680
+Sa computer ko, kapag localhost ang inilagay ko, ito ang lumabas: Couldn't connect with these settings.
+
+103
+00:06:45,530 --> 00:06:50,715
+Ang ayos: gamitin ang http colon slash slash 127.
+
+104
+00:06:50,715 --> 00:06:50,926
+0.
+
+105
+00:06:50,926 --> 00:06:51,138
+0.
+
+106
+00:06:51,138 --> 00:06:52,619
+1 colon 11434.
+
+107
+00:06:52,619 --> 00:06:57,487
+At lumabas ang Connection tested successfully.
+
+108
+00:06:57,487 --> 00:07:04,682
+Ang buong hakbang sa paggawa ng credential ay nasa susunod na video.
+
+109
+00:07:05,532 --> 00:07:07,804
+Kumpleto na ang setup mo: Node.
+
+110
+00:07:07,804 --> 00:07:11,763
+js, n8n, Ollama at ang model, at ang local na account.
+
+111
+00:07:11,763 --> 00:07:21,732
+Ngayong handa na ang lahat, i-click ang video sa screen para gumawa ng sarili mong AI agent sa n8n, na gumagamit ng tools at may memory.
+

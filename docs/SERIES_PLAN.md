@@ -13,6 +13,7 @@ Planned with the youtube-growth-playbook and youtube-video-blueprint skills.
 
 | # | Search-style video title | Result shown in first 30 s | Length | Short cut from the gotcha |
 |---|---|---|---|---|
+| 0 | How to Install n8n Locally on Windows 11 (Tagalog): Free Setup with Ollama, No Docker (BUILT, 7:22) | n8n open at localhost:5678 and the model answering, in the first 25 s | 7:22 | Why n8n 2.47.5 needs Node 24 or newer |
 | 1 | n8n AI Agent Tutorial for Beginners (Tagalog): Build an AI Assistant That Uses Tools (BUILT, 8:38) | The agent solves the discount question with the Calculator tool | 8:38 | Why your AI gets math wrong: give it a Calculator tool |
 | 2 | n8n Telegram AI Bot Tutorial (Tagalog) | The bot replying in Telegram on a phone | 10 min | Agent vs chatbot in 20 seconds |
 | 3 | n8n AI Agent with Google Sheets (Tagalog): Study Tracker | The agent writing a row to a sheet | 10 min | The system message that makes it use tools |
