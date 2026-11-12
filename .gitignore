@@ -1,0 +1,10 @@
+_tmp_*/
+__pycache__/
+*.tmp.mp4
+runtime/
+videos/
+upload-kit/
+source/_tts/
+source/_sample*
+source/*.log
+*.log

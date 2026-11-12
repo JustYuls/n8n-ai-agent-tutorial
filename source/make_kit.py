@@ -1,0 +1,165 @@
+"""Upload kit for "n8n AI Agent Tutorial for Beginners (Tagalog)" (made from series-tools/upload-kit/make_kit_template.py).
+Expected project layout: videos/, thumbnails/, chapters/ (one .txt per long video, lines like "0:00 Intro"), upload-kit/ (created).
+Generate upload-kit/index.html (copy buttons) and upload-kit/*.txt for the Git and GitHub series.
+Run:  python source/make_kit.py      (rerun after rebuilding videos so chapters and durations match)
+Edit the ITEMS below to change any title, description, tag or comment.
+"""
+import json, re, subprocess
+from pathlib import Path
+import imageio_ffmpeg
+
+ROOT = Path(__file__).resolve().parent.parent
+KIT = ROOT / "upload-kit"; KIT.mkdir(exist_ok=True)
+FF = imageio_ffmpeg.get_ffmpeg_exe()
+SERIES = "AI Automation with n8n (Tagalog)"
+NOTES_LONG = ("Independent tutorial, not affiliated with n8n, Ollama or any AI provider. Every screen is a real capture from n8n 2.47.5 running on my computer, "
+              "and every result shown (including the mistakes) is the real output of the llama3.2:3b model. Narration is a synthetic voice (Filipino text-to-speech) and the presenter is a cartoon. "
+              "The model is small and sometimes confused; use a larger model for more reliable results.")
+
+LINKS = [("PLAYLIST", "Playlist link"), ("WORKFLOW", "Workflow JSON + system message link (GitHub)"), ("NEXT", "Part 2 link (Telegram bot, when it exists)")]
+
+ITEMS = [
+    dict(id="01", kind="long", video="videos/01_n8n-ai-agent-tutorial-tagalog.mp4", thumb="thumbnails/01_n8n-ai-agent-tutorial-tagalog.png",
+         chapters="chapters/01_n8n-ai-agent-tutorial-tagalog.txt", name="Video 1: n8n AI Agent Tutorial for Beginners (Tagalog)",
+         title="n8n AI Agent Tutorial for Beginners (Tagalog): Build an AI Assistant That Uses Tools",
+         hook="Learn how to build an AI agent in n8n step by step (Tagalog): connect a free local AI model, add tools like Calculator and Wikipedia, and give it memory.",
+         learn=["The difference between a chatbot, a workflow and an AI agent", "Chat Trigger, AI Agent and Ollama Chat Model nodes, with no API key",
+                "Why a vague system message gives a wrong answer (2414.72) and a clear one gives the right one (2250.08)",
+                "Simple Memory, so the agent remembers the conversation, and how to read the Executions log"],
+         resources=["Workflow JSON and the system message (copy-paste): {{WORKFLOW}}", "Playlist: " + SERIES + ": {{PLAYLIST}}", "Next, Part 2: connect the agent to Telegram: {{NEXT}}",
+                    "n8n: https://n8n.io    Ollama: https://ollama.com"],
+         notes=NOTES_LONG, hashtags="#n8n #AIAgent #Tagalog",
+         tags=["n8n ai agent tutorial", "n8n tutorial for beginners tagalog", "ai agent tutorial tagalog", "n8n tutorial", "n8n ai agent", "n8n chat trigger",
+               "ai automation tagalog", "free ai agent no api key", "SirYuls TV"],
+         pinned="Workflow file and the full system message are in the description. The model is small, so it sometimes gets confused; a larger model is more reliable. "
+                "Which tool should I add to the agent next? Tell me below. Next: connect it to Telegram: {{NEXT}}",
+         settings=["Add to the playlist as video 1", "Not made for kids", "Altered or synthetic content: yes (synthetic voice, cartoon presenter)",
+                   "End screen (last 15 to 20 s): the playlist or Part 2 when it exists, plus Subscribe. The right half of the last slide is clear",
+                   "Upload the thumbnail and captions/ .srt (Subtitles, English). The narration is Taglish, so also upload it as the Filipino/English caption track if you prefer",
+                   "Put reviewer-buddy.json and the system message on GitHub before release, then paste its link above",
+                   "Set the Related video of each Short to this video"]),
+]
+
+PLAYLIST = dict(
+    title=SERIES,
+    description=("Learn n8n step by step in Tagalog: build AI agents, connect them to Telegram and Google Sheets, and automate your study or work.\n\n"
+                 "Watch in order:\n1. n8n AI Agent Tutorial for Beginners (Tagalog)\n2. n8n Telegram AI Bot (coming soon)\n3. n8n AI Agent with Google Sheets (coming soon)\n\n" + NOTES_LONG),
+)
+
+
+def duration(path):
+    r = subprocess.run([FF, "-i", str(path)], capture_output=True, text=True)
+    m = re.search(r"Duration: (\d+):(\d+):(\d+\.\d+)", r.stderr)
+    return int(m[1]) * 3600 + int(m[2]) * 60 + float(m[3]) if m else 0.0
+
+
+def secs(t):
+    p = [int(x) for x in t.split(":")]
+    return p[0] * 60 + p[1] if len(p) == 2 else p[0] * 3600 + p[1] * 60 + p[2]
+
+
+def fmt(s): return f"{int(s // 60)}:{int(s % 60):02d}"
+
+
+warnings = []
+for it in ITEMS:
+    vp = ROOT / it["video"]
+    it["duration"] = duration(vp) if vp.exists() else 0
+    it["duration_text"] = fmt(it["duration"])
+    it["tags_text"] = ", ".join(it["tags"])
+    if it["kind"] == "long":
+        ch = (ROOT / it["chapters"]).read_text(encoding="utf-8").strip()
+        it["chapters_text"] = ch
+        times = [secs(l.split()[0]) for l in ch.splitlines()]
+        ends = times[1:] + [it["duration"]]
+        if times[0] != 0 or len(times) < 3 or any(e - s < 10 for s, e in zip(times, ends)):
+            warnings.append(f"{it['id']}: chapters break YouTube rules")
+        it["description"] = "\n\n".join([it["hook"], "What you'll learn:\n" + "\n".join("- " + x for x in it["learn"]), ch, "\n".join(it["resources"]), it["notes"], it["hashtags"]])
+    else:
+        it["chapters_text"] = ""
+        it["description"] = it["desc_short"] + "\n\n" + it["hashtags"]
+    for label, val in (("title", it["title"]), ("description", it["description"]), ("tags", it["tags_text"])):
+        if "<" in val or ">" in val: warnings.append(f"{it['id']}: '<' or '>' in {label} (YouTube rejects it)")
+    if len(it["title"]) > 100: warnings.append(f"{it['id']}: title over 100 characters")
+    if len(it["tags_text"]) > 500: warnings.append(f"{it['id']}: tags over 500 characters")
+    if len(it["description"]) > 5000: warnings.append(f"{it['id']}: description over 5000 characters")
+
+# plain-text files
+for it in ITEMS:
+    parts = [f"{it['name']}  ({it['duration_text']})", f"Video: {it['video']}", f"Thumbnail: {it['thumb'] or 'none (Shorts)'}", "",
+             "=== TITLE ===", it["title"], "", "=== DESCRIPTION ===", it["description"], "", "=== TAGS ===", it["tags_text"], "", "=== PINNED COMMENT ===", it["pinned"], "",
+             "=== SETTINGS ==="] + ["- " + s for s in it["settings"]]
+    slug = Path(it["video"]).stem
+    (KIT / f"{slug}.txt").write_text("\n".join(parts) + "\n", encoding="utf-8")
+(KIT / "playlist.txt").write_text(f"=== PLAYLIST TITLE ===\n{PLAYLIST['title']}\n\n=== PLAYLIST DESCRIPTION ===\n{PLAYLIST['description']}\n", encoding="utf-8")
+
+DATA = dict(items=ITEMS, playlist=PLAYLIST, links=LINKS)
+HTML = r"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>n8n AI Agent Tutorial: upload kit</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#0b1f4b;--mut:#5b6b8c;--line:#d8def0;--acc:#ffd21f;--accink:#0b1f4b;--ok:#1a7f37;--warn:#b54708;--field:#f8f9fd}
+@media (prefers-color-scheme:dark){:root{--bg:#07122e;--card:#0f2150;--ink:#eef2ff;--mut:#9db0d8;--line:#23356b;--field:#0a1840;--ok:#7ee787;--warn:#ffb86b}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,Segoe UI,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:24px 16px 80px}h1{margin:0 0 4px;font-size:28px}h2{margin:0;font-size:22px}
+.sub{color:var(--mut);margin:0 0 20px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:16px 0}
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.links label{font-size:13px;color:var(--mut);display:block}
+input[type=text]{width:100%;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);font:inherit}
+.head{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:8px}.head img{width:240px;max-width:100%;border-radius:10px;border:1px solid var(--line)}
+.meta{color:var(--mut);font-size:14px}.meta code{background:var(--field);padding:1px 6px;border-radius:6px}
+.tag{display:inline-block;background:var(--acc);color:var(--accink);font-weight:700;border-radius:999px;padding:2px 12px;font-size:13px;margin-right:6px}
+.field{margin:12px 0}.field .row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.field label{font-weight:700}.cnt{color:var(--mut);font-size:13px;margin-left:8px;font-weight:400}.miss{color:var(--warn);font-size:13px;margin-left:8px;font-weight:600}
+textarea{width:100%;border:1px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);padding:10px;font:14px/1.45 ui-monospace,Consolas,monospace;resize:vertical}
+button{border:0;background:var(--acc);color:var(--accink);font-weight:700;border-radius:10px;padding:8px 16px;cursor:pointer;font:inherit;font-weight:700}
+button:hover{filter:brightness(.95)}button.done{background:var(--ok);color:#fff}
+ul.set{margin:6px 0 0 18px;padding:0;color:var(--mut);font-size:14px}.steps{margin:0;padding-left:20px;color:var(--mut)}
+</style></head><body><div class="wrap">
+<h1>n8n AI Agent Tutorial (Tagalog): upload kit</h1>
+<p class="sub">Upload the video, then use each Copy button and paste into YouTube Studio. Paste your video links in the box below after you upload, and every field fills in.</p>
+<div class="card"><ol class="steps"><li>Upload the video, then use each Copy button.</li><li>For each video: Copy title, description, tags, then upload the thumbnail file.</li><li>After a video is live, paste its link below. The next descriptions update automatically.</li><li>Create the playlist first or last, and paste its link too.</li></ol></div>
+<div class="card"><h2>Links (fill in as you go)</h2><div class="links" id="links"></div></div>
+<div id="items"></div>
+<div class="card"><h2>Playlist</h2><div id="playlist"></div></div>
+</div>
+<script>
+const DATA=__DATA__;
+const links={};try{Object.assign(links,JSON.parse(localStorage.getItem("n8nkit-links")||"{}"))}catch(e){}
+const fields=[];
+function fill(t){return t.replace(/\{\{(\w+)\}\}/g,(m,k)=>links[k]||m)}
+function missing(t){return (fill(t).match(/\{\{\w+\}\}/g)||[]).length}
+function mkField(parent,label,text,rows,limit){
+  const d=document.createElement("div");d.className="field";
+  d.innerHTML='<div class="row"><div><label></label><span class="cnt"></span><span class="miss"></span></div><button type="button">Copy</button></div><textarea readonly></textarea>';
+  d.querySelector("label").textContent=label;const ta=d.querySelector("textarea");ta.rows=rows;
+  const btn=d.querySelector("button"),cnt=d.querySelector(".cnt"),miss=d.querySelector(".miss");
+  function upd(){const v=fill(text);ta.value=v;ta.style.height="auto";ta.style.height=(ta.scrollHeight+6)+"px";cnt.textContent=v.length+(limit?" / "+limit:"")+" characters";const m=missing(text);miss.textContent=m?m+" link(s) still to paste":""}
+  btn.onclick=async()=>{const v=ta.value;try{await navigator.clipboard.writeText(v)}catch(e){ta.select();document.execCommand("copy")}
+    btn.textContent="Copied";btn.classList.add("done");setTimeout(()=>{btn.textContent="Copy";btn.classList.remove("done")},1500)};
+  ta.onfocus=()=>ta.select();upd();fields.push(upd);parent.appendChild(d)}
+const L=document.getElementById("links");
+DATA.links.forEach(([k,label])=>{const w=document.createElement("div");w.innerHTML='<label></label><input type="text" placeholder="https://youtu.be/...">';
+  w.querySelector("label").textContent=label;const i=w.querySelector("input");i.value=links[k]||"";
+  i.oninput=()=>{links[k]=i.value.trim();try{localStorage.setItem("n8nkit-links",JSON.stringify(links))}catch(e){}fields.forEach(f=>f())};L.appendChild(w)});
+const box=document.getElementById("items");
+DATA.items.forEach(it=>{const c=document.createElement("div");c.className="card";
+  const head=document.createElement("div");head.className="head";
+  head.innerHTML=(it.thumb?'<a download href="../'+it.thumb+'"><img src="../'+it.thumb+'" alt="thumbnail"></a>':"")+'<div><span class="tag"></span><h2></h2><div class="meta"></div></div>';
+  head.querySelector(".tag").textContent=it.kind==="short"?"SHORT "+it.id:"VIDEO "+it.id;head.querySelector("h2").textContent=it.name;
+  head.querySelector(".meta").innerHTML='Length '+it.duration_text+'<br>Video file: <code></code>'+(it.thumb?'<br>Thumbnail: <code class="t"></code> (click the image to download)':'<br>Shorts use a frame from the video')+'<ul class="set"></ul>';
+  head.querySelector("code").textContent=it.video;if(it.thumb)head.querySelector(".t").textContent=it.thumb;
+  it.settings.forEach(s=>{const li=document.createElement("li");li.textContent=s;head.querySelector(".set").appendChild(li)});
+  c.appendChild(head);
+  mkField(c,"Title",it.title,2,100);
+  mkField(c,"Description",it.description,it.kind==="short"?7:20,5000);
+  if(it.chapters_text)mkField(c,"Chapters only",it.chapters_text,Math.min(10,it.chapters_text.split("\n").length+1));
+  mkField(c,"Tags",it.tags_text,3,500);
+  mkField(c,"Pinned comment",it.pinned,3);
+  box.appendChild(c)});
+const P=document.getElementById("playlist");mkField(P,"Playlist title",DATA.playlist.title,2);mkField(P,"Playlist description",DATA.playlist.description,10);
+const n=document.createElement("p");n.className="meta";n.textContent="YouTube has no playlist cover upload. The playlist shows the thumbnail of its first video.";P.appendChild(n);
+fields.forEach(f=>f());window.addEventListener("resize",()=>fields.forEach(f=>f()));
+</script></body></html>"""
+(KIT / "index.html").write_text(HTML.replace("__DATA__", json.dumps(DATA, ensure_ascii=False).replace("</", "<\\/")), encoding="utf-8")
+print("kit written;", "warnings:" if warnings else "no warnings", *warnings, sep="\n  ")
+for it in ITEMS: print(it["id"], it["duration_text"], len(it["title"]), "title chars,", len(it["tags_text"]), "tag chars,", len(it["description"]), "desc chars")

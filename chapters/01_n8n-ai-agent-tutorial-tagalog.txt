@@ -1,0 +1,9 @@
+0:00 Demo: AI agent na gumagamit ng calculator
+0:38 Agent vs chatbot, at ano ang kailangan
+1:27 Phase A: Chat Trigger, AI Agent at model
+3:07 Pause and try, at ang unang reply
+3:57 Phase B: tools at system message
+5:06 Pause and try: ang tamang expression
+6:38 Phase C: memory
+7:44 Test at executions
+8:26 Next: i-connect sa Telegram
