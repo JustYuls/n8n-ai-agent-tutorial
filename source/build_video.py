@@ -34,6 +34,7 @@ MUTED, RED, PINK = "#9DB0D8", "#FF6B6B", "#FF8FB1"
 VOICE = "fil-PH-AngeloNeural"
 SHOTS = HERE / "shots"
 SHOTS_INSTALL = HERE / "shots_install"
+SHOTS_PART2 = HERE / "shots_part2"
 TTS = HERE / "_tts"
 TTS.mkdir(exist_ok=True)
 FF = imageio_ffmpeg.get_ffmpeg_exe()
@@ -54,15 +55,21 @@ def m(x, y):
 
 
 # ---------------------------------------------------------------- voice
-def tts(text):
-    key = hashlib.sha1(f"{VOICE}|{text}".encode()).hexdigest()[:16]
+EN_VOICE = "en-US-AndrewNeural"
+MIXED = bool(getattr(_mod, "MIXED", False))
+EN_TERMS = list(getattr(_mod, "EN_TERMS", []))
+EN_RE = re.compile("(?<![A-Za-z])(" + "|".join(sorted((t if t.startswith("(?") else re.escape(t) for t in EN_TERMS), key=len, reverse=True)) + ")(?![A-Za-z])", re.I) if EN_TERMS else None
+
+
+def _synth(text, voice):
+    key = hashlib.sha1(f"{voice}|{text}".encode()).hexdigest()[:16]
     wav = TTS / f"{key}.wav"
     if wav.exists():
         return wav
     mp3 = TTS / f"{key}.mp3"
     for attempt in range(4):
         try:
-            asyncio.run(edge_tts.Communicate(text, VOICE, rate="-4%").save(str(mp3)))
+            asyncio.run(edge_tts.Communicate(text, voice, rate="-4%").save(str(mp3)))
             break
         except Exception as e:  # network hiccup: retry
             if attempt == 3:
@@ -71,6 +78,31 @@ def tts(text):
     subprocess.run([FF, "-y", "-loglevel", "error", "-i", str(mp3), "-ac", "1", "-ar", "24000", str(wav)], check=True)
     mp3.unlink()
     return wav
+
+
+def tts(text):
+    if not (MIXED and EN_RE):
+        return _synth(text, VOICE)
+    # mixed voice: English technical terms are spoken by an English voice, the rest by the Filipino voice
+    key = hashlib.sha1(f"mixed|{VOICE}|{EN_VOICE}|{text}".encode()).hexdigest()[:16]
+    out = TTS / f"{key}.wav"
+    if out.exists():
+        return out
+    parts = [(seg, bool(EN_RE.fullmatch(seg))) for seg in EN_RE.split(text) if seg and seg.strip()]
+    frames, params = [], None
+    for seg, is_en in parts:
+        seg = seg.strip().rstrip('-').strip()
+        if not re.search(r"\w", seg):
+            continue
+        w = _synth(seg, EN_VOICE if is_en else VOICE)
+        with wave.open(str(w)) as wf:
+            params = wf.getparams()
+            frames.append(wf.readframes(wf.getnframes()))
+    with wave.open(str(out), "wb") as wo:
+        wo.setparams(params)
+        for fr in frames:
+            wo.writeframes(fr)
+    return out
 
 
 def wav_len(p):
@@ -142,7 +174,7 @@ def draw_hl(d, rects, conv):
 
 
 def shot_img(name):
-    for base in (SHOTS_INSTALL, SHOTS):
+    for base in (SHOTS_PART2, SHOTS_INSTALL, SHOTS):
         if (base / f"{name}.jpg").exists():
             return Image.open(base / f"{name}.jpg").convert("RGB")
     raise FileNotFoundError(name)
@@ -339,12 +371,114 @@ def slide_next():
     return img, d  # right half and bottom stay clear for the end-screen element
 
 
-SLIDES = {"hook_checks": slide_hook_checks, "requirements": slide_requirements, "account_tips": slide_account_tips, "ready": slide_ready, "agent_vs": slide_agent_vs, "needs": slide_needs, "system_message": slide_system, "results": slide_results, "next": slide_next}
+def slide_p2_needs():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Ang kailangan mo (libre lahat)", font=f(72), fill=WHITE)
+    rows = [("1", "Ang workflow mula sa Part 1", "Reviewer Buddy: AI Agent, Ollama, Calculator, Wikipedia, memory"), ("2", "n8n at Ollama na tumatakbo", "http://localhost:5678  at  http://127.0.0.1:11434"),
+            ("3", "Chrome at Python (para sa maliit na web server)", "Walang Telegram, walang bagong account")]
+    y = 230
+    for n, a, c in rows:
+        d.rounded_rectangle((40, y, 1520, y + 150), 30, fill=CARD)
+        d.ellipse((75, y + 35, 155, y + 115), fill=YELLOW)
+        d.text((115 - d.textlength(n, font=f(52)) / 2, y + 45), n, font=f(52), fill=NAVY)
+        d.text((190, y + 20), a, font=f(42), fill=WHITE)
+        d.text((190, y + 88), c, font=f(32), fill=MUTED)
+        y += 168
+    d.text((40, 750), "Parte A: Hosted Chat   |   B: Embedded Chat sa sarili mong page", font=f(34), fill=YELLOW)
+    return img, d
+
+
+def slide_chat_options():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Dalawang paraan ng chat sa n8n", font=f(72), fill=WHITE)
+    cols = [("HOSTED CHAT", "May chat page na galing mismo sa n8n", "Walang code. Pinakamadali.", "Parte A", False),
+            ("EMBEDDED CHAT", "Ikaw ang gagawa ng page, at ilalagay ang chat widget", "Sarili mong itsura at kulay.", "Parte B", True)]
+    for i, (a, b, c, p, hot) in enumerate(cols):
+        x = 40 + i * 750
+        d.rounded_rectangle((x, 260, x + 720, 700), 36, fill=CARD, outline=YELLOW if hot else None, width=6)
+        d.text((x + 40, 290), a, font=f(52), fill=YELLOW if hot else WHITE)
+        wrap_draw(d, b, x + 40, 400, 40, WHITE, 640, 0.2)
+        wrap_draw(d, c, x + 40, 560, 34, GREEN, 640, 0.2)
+        d.rounded_rectangle((x + 40, 630, x + 220, 680), 25, fill=YELLOW)
+        d.text((x + 130 - d.textlength(p, font=f(30)) / 2, 637), p, font=f(30), fill=NAVY)
+    return img, d
+
+
+def slide_embed_code():
+    img, d = frame_base("PHASE B")
+    d.text((40, 110), "Ang buong code ng page (ang bahagi ng chat)", font=f(60), fill=WHITE)
+    d.rounded_rectangle((40, 210, 1520, 755), 30, fill="#0A1636", outline="#3B4F8A", width=3)
+    lines = [("#7B8DB5", "<!-- sa <head>: stylesheet, naka-pin ang version -->"),
+             ("#CBD5E1", "<link href=\".../npm/@n8n/chat@1.46.4/dist/style.css\" rel=\"stylesheet\">"),
+             ("#7B8DB5", ""),
+             ("#7B8DB5", "<!-- bago mag-</body> -->"),
+             ("#CBD5E1", "<script type=\"module\">"),
+             ("#CBD5E1", "  import { createChat } from '.../@n8n/chat@1.46.4/dist/chat.bundle.es.js';"),
+             ("#CBD5E1", "  createChat({"),
+             (YELLOW, "    webhookUrl: 'http://localhost:5678/webhook/<id>/chat',"),
+             (GREEN, "    mode: 'window',"),
+             ("#CBD5E1", "    initialMessages: ['Kumusta! Ako si Reviewer Buddy.'],"),
+             ("#CBD5E1", "  });"),
+             ("#CBD5E1", "</script>")]
+    y = 228
+    for col, t in lines:
+        d.text((70, y), t, font=fm(27), fill=col)
+        y += 42
+    d.text((40, 772), "Ang buong HTML file ay nasa GitHub (link sa description).", font=f(34), fill=MUTED)
+    return img, d
+
+
+def slide_p2_rules():
+    img, d = frame_base("BAGO MO I-SHARE")
+    d.text((40, 110), "3 paalala bago mo i-share", font=f(76), fill=WHITE)
+    rows = [("1", "I-publish muna ang workflow", "Hindi gagana ang chat link kapag hindi pa Published."),
+            ("2", "Localhost ang link: sa computer mo lang", "Hindi ito bubukas sa ibang computer o phone."),
+            ("3", "Authentication: None = bukas sa sinumang may link", "Gumamit ng Authentication bago mag-share. Computer mo ang gagamit ng lakas.")]
+    y = 250
+    for n, a, b in rows:
+        d.rounded_rectangle((40, y, 1520, y + 190), 30, fill=CARD)
+        d.ellipse((75, y + 55, 155, y + 135), fill=YELLOW)
+        d.text((115 - d.textlength(n, font=f(52)) / 2, y + 65), n, font=f(52), fill=NAVY)
+        d.text((190, y + 30), a, font=f(44), fill=WHITE)
+        d.text((190, y + 105), b, font=f(32), fill=MUTED)
+        y += 215
+    return img, d
+
+
+def slide_p2_results():
+    img, d = frame_base("BUOD NG TEST")
+    d.text((40, 110), "Mga totoong resulta", font=f(72), fill=WHITE)
+    rows = [("Hosted Chat (galing sa n8n)", "2250.08", "TAMA", True), ("Embedded widget sa sarili kong page", "2250.08", "TAMA", True),
+            ("Unang bersyon ng page ko", "sira ang layout", "MALI", False), ("Pagkatapos ayusin ang CSS", "buo ang chat", "TAMA", True)]
+    y = 230
+    for a, b, c, ok in rows:
+        d.rounded_rectangle((40, y, 1520, y + 120), 26, fill=CARD)
+        d.text((70, y + 34), a, font=f(38), fill=WHITE)
+        d.text((830, y + 30), b, font=f(44), fill=YELLOW)
+        d.rounded_rectangle((1280, y + 24, 1480, y + 96), 36, fill=GREEN if ok else RED)
+        d.text((1380 - d.textlength(c, font=f(38)) / 2, y + 35), c, font=f(38), fill=NAVY)
+        y += 140
+    wrap_draw(d, "Nasa computer ko ang lahat: n8n, Ollama at ang model. Mga 20 segundo ang sagot.", 40, 788, 34, MUTED, 1480, 0.2)
+    return img, d
+
+
+def slide_p2_next():
+    img, d = canvas()
+    d.text((100, 200), "Susunod", font=f(60), fill=MUTED)
+    d.text((100, 280), "Part 3", font=f(140), fill=YELLOW)
+    wrap_draw(d, "I-save sa Excel ang mga tanong at sagot: sarili mong study tracker", 100, 450, 54, WHITE, 1000, 0.2)
+    d.rounded_rectangle((100, 640, 1100, 790), 36, fill=CARD, outline=YELLOW, width=4)
+    d.text((140, 662), "Workflow file at chat page", font=f(44), fill=WHITE)
+    d.text((140, 725), "Nasa description", font=f(36), fill=MUTED)
+    return img, d  # right half and bottom stay clear for the end-screen element
+
+
+SLIDES = {"p2_needs": slide_p2_needs, "chat_options": slide_chat_options, "embed_code": slide_embed_code, "p2_rules": slide_p2_rules, "p2_results": slide_p2_results, "p2_next": slide_p2_next, "hook_checks": slide_hook_checks, "requirements": slide_requirements, "account_tips": slide_account_tips, "ready": slide_ready, "agent_vs": slide_agent_vs, "needs": slide_needs, "system_message": slide_system, "results": slide_results, "next": slide_next}
 
 
 def frame_slide(sc, sub=""):
     img, d = SLIDES[sc["slide"]]()
-    if sc["slide"] not in ("next", "ready"):
+    if sc["slide"] not in ("next", "ready", "p2_next"):
         subtitle(d, sub)
     return img
 
@@ -375,7 +509,7 @@ def frame_comment(sc, sub=""):
 
 
 def sentences(text):
-    parts = [s.strip() for s in re.findall(r"[^.?!]+[.?!]+|[^.?!]+$", text) if s.strip()]
+    parts = [s.strip().replace("․", ".") for s in re.findall(r"[^.?!]+[.?!]+|[^.?!]+$", re.sub(r"(?<=\d)\.(?=\d)", "․", text)) if s.strip()]
     return parts or [text]
 
 

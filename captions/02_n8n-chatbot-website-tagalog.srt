@@ -1,0 +1,380 @@
+1
+00:00:00,350 --> 00:00:01,980
+Tingnan mo 'to.
+
+2
+00:00:01,980 --> 00:00:11,763
+Ito ang sarili kong web page, at ang chat sa kanan ay ang AI agent na ginawa natin sa n8n.
+
+3
+00:00:11,763 --> 00:00:23,610
+Tinanong ko ulit: magkano ang final price kung 18 percent na discount sa 2450 pesos, tapos 12 percent na VAT?
+
+4
+00:00:23,610 --> 00:00:27,523
+Ang sagot: 2250 pesos at 8 centavos.
+
+5
+00:00:27,523 --> 00:00:28,066
+Tama.
+
+6
+00:00:28,066 --> 00:00:43,718
+Sa video na ito, matututo kang maglagay ng chatbot sa web page mo gamit ang agent mo, kahit walang Telegram at kahit hindi ka marunong mag-code.
+
+7
+00:00:44,568 --> 00:00:54,248
+Ang kailangan mo ay ang workflow mula sa Part 1, ang n8n na tumatakbo, at ang Ollama.
+
+8
+00:00:54,248 --> 00:01:02,789
+Kung wala pa, nasa description ang link ng setup guide at ng workflow file.
+
+9
+00:01:02,789 --> 00:01:06,205
+Ang plano ko sana ay Telegram.
+
+10
+00:01:06,205 --> 00:01:19,415
+Pero wala akong naka-install na Telegram sa computer na ito, kaya gumawa ako ng mas simpleng paraan: isang web chat.
+
+11
+00:01:19,415 --> 00:01:24,312
+Wala itong kailangang account sa ibang app.
+
+12
+00:01:25,162 --> 00:01:28,186
+May dalawang paraan sa n8n.
+
+13
+00:01:28,186 --> 00:01:36,250
+Una, ang Hosted Chat: may chat page na na mismong n8n ang nagseserbisyo.
+
+14
+00:01:36,250 --> 00:01:39,162
+Wala kang gagawin na code.
+
+15
+00:01:39,162 --> 00:01:48,794
+Pangalawa, ang Embedded Chat: ikaw ang gagawa ng page, at ilalagay mo ang chat widget.
+
+16
+00:01:48,794 --> 00:01:55,738
+Gagawin natin ang dalawa, at magsisimula tayo sa pinakamadali.
+
+17
+00:01:56,588 --> 00:02:01,944
+Buksan ang workflow mula sa Part 1.
+
+18
+00:02:01,944 --> 00:02:13,728
+Ito pa rin ang Chat Trigger, AI Agent, Ollama, memory, at ang dalawang tools.
+
+19
+00:02:13,728 --> 00:02:17,707
+Walang babaguhin sa agent.
+
+20
+00:02:17,707 --> 00:02:22,604
+I-double-click ang Chat Trigger.
+
+21
+00:02:23,454 --> 00:02:27,505
+Nandito ang switch na Make Chat Publicly Available.
+
+22
+00:02:27,505 --> 00:02:32,430
+Naka-off pa ito, kaya ang chat ay para lang sa loob ng editor.
+
+23
+00:02:33,280 --> 00:02:34,214
+I-on ito.
+
+24
+00:02:34,214 --> 00:02:36,392
+Lumabas ang Chat URL.
+
+25
+00:02:36,392 --> 00:02:46,560
+At basahin ang dilaw na kahon: Chat will be live at the URL above once this workflow is published.
+
+26
+00:02:46,560 --> 00:02:55,171
+Ibig sabihin, hindi pa gagana ang link hangga't hindi mo pina-publish ang workflow.
+
+27
+00:02:55,171 --> 00:02:56,416
+Tandaan ito.
+
+28
+00:02:57,266 --> 00:03:05,032
+Pwede mo ring palitan ang Initial Messages, ang unang bati ng chat.
+
+29
+00:03:05,032 --> 00:03:09,668
+Nilagyan ko ng Taglish na bati: Kumusta!
+
+30
+00:03:09,668 --> 00:03:12,218
+Ako si Reviewer Buddy.
+
+31
+00:03:13,068 --> 00:03:23,724
+Isara ang node, i-click ang Publish sa taas, bigyan ng pangalan ang version, at i-click ang Publish.
+
+32
+00:03:24,574 --> 00:03:31,601
+Lumabas ang Workflow published: You can now make calls to your production chat URL.
+
+33
+00:03:31,601 --> 00:03:33,718
+Ngayon, live na ang link.
+
+34
+00:03:34,568 --> 00:03:36,336
+Pause and try.
+
+35
+00:03:36,336 --> 00:03:48,206
+Sa sarili mong screen, i-on ang public chat, i-publish ang workflow, at kopyahin ang Chat URL.
+
+36
+00:03:48,206 --> 00:03:50,984
+May walong segundo ka.
+
+37
+00:04:03,834 --> 00:04:09,661
+Magbukas ng bagong tab, at i-paste ang Chat URL.
+
+38
+00:04:09,661 --> 00:04:15,123
+Ito na ang chat page, na galing mismo sa n8n.
+
+39
+00:04:15,123 --> 00:04:18,887
+Nandito ang sarili nating bati.
+
+40
+00:04:18,887 --> 00:04:20,586
+Subukan natin.
+
+41
+00:04:21,436 --> 00:04:31,036
+Pareho ang tanong: 18 percent na discount sa 2450 pesos, at 12 percent na VAT.
+
+42
+00:04:31,036 --> 00:04:35,466
+Ang sagot: 2250 pesos at 8 centavos.
+
+43
+00:04:35,466 --> 00:04:39,527
+Tama, at walang code na isinulat.
+
+44
+00:04:39,527 --> 00:04:42,727
+Pero para siyang n8n page.
+
+45
+00:04:42,727 --> 00:04:47,404
+Gusto natin sa sarili nating web page.
+
+46
+00:04:48,254 --> 00:04:51,736
+Bumalik sa Chat Trigger.
+
+47
+00:04:51,736 --> 00:04:58,991
+Sa Mode, palitan ang Hosted Chat ng Embedded Chat.
+
+48
+00:04:58,991 --> 00:05:07,406
+Ito ang para sa widget na ilalagay mo sa sarili mong page.
+
+49
+00:05:08,256 --> 00:05:20,387
+Sinasabi ng n8n: follow the instructions to embed chat in a webpage, or just call the webhook URL.
+
+50
+00:05:20,387 --> 00:05:23,111
+Pareho pa rin ang URL.
+
+51
+00:05:23,111 --> 00:05:29,424
+I-publish ulit ang workflow, dahil may binago tayo.
+
+52
+00:05:30,274 --> 00:05:34,499
+Ito ang buong code ng page ko.
+
+53
+00:05:34,499 --> 00:05:41,963
+Una, ang stylesheet at ang script ng n8n chat widget.
+
+54
+00:05:41,963 --> 00:05:56,751
+Ginamit ko ang version 1.46.4, at naka-pin ang version para hindi masira ang page kapag may bagong labas.
+
+55
+00:05:56,751 --> 00:06:00,412
+Pangalawa, ang createChat.
+
+56
+00:06:00,412 --> 00:06:06,750
+Ang webhookUrl ay ang Chat URL na kinopya mo.
+
+57
+00:06:06,750 --> 00:06:13,791
+Ang mode na window ay ang bubble sa ibabang kanan.
+
+58
+00:06:13,791 --> 00:06:18,298
+Nasa description ang buong file.
+
+59
+00:06:19,148 --> 00:06:28,332
+Para buksan ang page, gumamit ako ng simpleng web server ng Python.
+
+60
+00:06:28,332 --> 00:06:35,460
+Pumunta sa folder, at patakbuhin ang python -m http.
+
+61
+00:06:35,460 --> 00:06:37,105
+server 8080.
+
+62
+00:06:37,105 --> 00:06:47,660
+Pagkatapos, buksan ang http colon slash slash 127.0.0.1 colon 8080 sa Chrome.
+
+63
+00:06:48,510 --> 00:06:53,874
+Ito ang page ko, at nandoon na ang chat bubble sa ibabang kanan.
+
+64
+00:06:53,874 --> 00:06:57,477
+Rosas ito dahil default na kulay ng widget.
+
+65
+00:06:57,477 --> 00:06:58,902
+Gusto kong dilaw.
+
+66
+00:06:59,752 --> 00:07:07,048
+Binago ko ang kulay gamit ang CSS variables, at dilaw na ang bubble.
+
+67
+00:07:07,048 --> 00:07:18,421
+Pero tingnan mo ang chat window: sira ang layout, at nagtatago ang laman sa loob ng isang maliit na kahon.
+
+68
+00:07:18,421 --> 00:07:20,460
+Common mistake ito.
+
+69
+00:07:20,460 --> 00:07:23,679
+Dalawa ang naging problema ko.
+
+70
+00:07:23,679 --> 00:07:33,979
+Una, ang tamang pangalan ng variable ay may dalawang gitling: dash dash color dash dash primary.
+
+71
+00:07:33,979 --> 00:07:45,352
+Pangalawa, ang CSS ko para sa main at sa p ay tumama rin sa loob ng widget, dahil main din ang gamit niya.
+
+72
+00:07:46,202 --> 00:07:55,829
+Ang ayos: nilagyan ko ng class na page ang sarili kong main, at doon ko lang inilapat ang style.
+
+73
+00:07:55,829 --> 00:08:01,946
+Ayan, buo na ang chat window, at nandoon ang Taglish na bati.
+
+74
+00:08:02,796 --> 00:08:06,099
+Subukan natin sa loob ng widget.
+
+75
+00:08:06,099 --> 00:08:11,879
+Parehong tanong, at ang sagot: 2250 pesos at 8 centavos.
+
+76
+00:08:11,879 --> 00:08:12,911
+Tama ulit.
+
+77
+00:08:12,911 --> 00:08:19,620
+Mga 20 segundo ang sagot dahil lokal na model ito sa computer ko.
+
+78
+00:08:20,470 --> 00:08:26,832
+Para makasiguro, buksan ang Executions ng workflow.
+
+79
+00:08:26,832 --> 00:08:42,550
+Nakatala ang takbo: Succeeded in 18 point 635 seconds, galing sa version na Embedded chat, at ginamit ng agent ang Calculator.
+
+80
+00:08:43,400 --> 00:08:45,088
+Tatlong paalala.
+
+81
+00:08:45,088 --> 00:08:53,425
+Una, i-publish muna ang workflow, dahil kung hindi, hindi gagana ang chat link.
+
+82
+00:08:53,425 --> 00:09:00,918
+Pangalawa, localhost ang link ko, kaya sa computer ko lang ito bubukas.
+
+83
+00:09:00,918 --> 00:09:05,350
+Hindi ito bubukas sa phone ng kaibigan mo.
+
+84
+00:09:05,350 --> 00:09:19,597
+Pangatlo, ang Authentication ay naka-None, kaya sinumang makakuha ng link ay pwedeng mag-chat, at ang computer mo ang gagamit ng lakas.
+
+85
+00:09:19,597 --> 00:09:26,456
+Bago mo i-share, gumamit ng Authentication o ng ibang proteksyon.
+
+86
+00:09:27,306 --> 00:09:32,261
+Ito ang buod ng mga totoong resulta.
+
+87
+00:09:32,261 --> 00:09:35,977
+Hosted chat: 2250.08, tama.
+
+88
+00:09:35,977 --> 00:09:40,243
+Embedded widget: 2250.08, tama.
+
+89
+00:09:40,243 --> 00:09:48,914
+Ang unang bersyon ng page ko: sira ang layout, dahil sa CSS ko.
+
+90
+00:09:48,914 --> 00:09:52,493
+Pagkatapos ayusin: buo na.
+
+91
+00:09:52,493 --> 00:10:01,026
+Tandaan: maliit na model ito, kaya mabagal at minsan nalilito.
+
+92
+00:10:01,876 --> 00:10:07,081
+Tanong ko sa iyo: anong website o page ang paglalagyan mo ng chatbot?
+
+93
+00:10:07,081 --> 00:10:08,740
+I-comment mo sa ibaba.
+
+94
+00:10:14,590 --> 00:10:31,672
+Ngayong nasa web page mo na ang agent, i-click ang video sa screen para sa susunod: ipapa-save natin sa Excel ang mga tanong at sagot, para magkaroon ka ng sarili mong study tracker.
+
+95
+00:10:31,672 --> 00:10:35,614
+Nasa description ang workflow at ang page.
+

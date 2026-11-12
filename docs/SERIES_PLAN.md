@@ -9,14 +9,14 @@ Planned with the youtube-growth-playbook and youtube-video-blueprint skills.
 
 ## Playlist
 - Title (keyword phrase): AI Automation with n8n (Tagalog)
-- Description first line: Learn n8n step by step in Tagalog: build AI agents, connect them to Telegram and Google Sheets, and automate your study or work.
+- Description first line: Learn n8n step by step in Tagalog: build AI agents, put them on your website and save results to Excel, and automate your study or work.
 
 | # | Search-style video title | Result shown in first 30 s | Length | Short cut from the gotcha |
 |---|---|---|---|---|
 | 0 | How to Install n8n Locally on Windows 11 (Tagalog): Free Setup with Ollama, No Docker (BUILT, 7:22) | n8n open at localhost:5678 and the model answering, in the first 25 s | 7:22 | Why n8n 2.47.5 needs Node 24 or newer |
 | 1 | n8n AI Agent Tutorial for Beginners (Tagalog): Build an AI Assistant That Uses Tools (BUILT, 8:38) | The agent solves the discount question with the Calculator tool | 8:38 | Why your AI gets math wrong: give it a Calculator tool |
-| 2 | n8n Telegram AI Bot Tutorial (Tagalog) | The bot replying in Telegram on a phone | 10 min | Agent vs chatbot in 20 seconds |
-| 3 | n8n AI Agent with Google Sheets (Tagalog): Study Tracker | The agent writing a row to a sheet | 10 min | The system message that makes it use tools |
+| 2 | n8n Chatbot for Your Website (Tagalog): Embed Your AI Agent, No Telegram Needed | The agent answering inside my own web page (Telegram replaced: not installed on the author's PC) | 10 min | Agent vs chatbot in 20 seconds |
+| 3 | n8n AI Agent with Excel (Tagalog): Study Tracker | The agent writing a row to a local Excel file (replaces Google Sheets: no account needed) | 10 min | The system message that makes it use tools |
 
 ## Per video checklist
 - [ ] Outline with stage timestamps (hook, setup, walkthrough with a gotcha, verification, exit ramp)

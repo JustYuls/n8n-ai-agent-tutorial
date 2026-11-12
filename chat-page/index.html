@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fil">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Reviewer Buddy: ang AI agent ko sa n8n</title>
+  <!-- n8n chat widget, pinned to a version. Docs: https://www.npmjs.com/package/@n8n/chat -->
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat@1.46.4/dist/style.css" rel="stylesheet">
+  <style>
+    :root { --bg:#0b1f4b; --card:#16306b; --ink:#ffffff; --muted:#9db0d8; --acc:#ffd21f; }
+    body { margin:0; font-family: system-ui, "Segoe UI", Arial, sans-serif; background:var(--bg); color:var(--ink); }
+    main.page { max-width: 760px; margin: 0 auto; padding: 56px 20px 120px; }
+    .page h1 { font-size: 40px; margin: 0 0 8px; }
+    .page h1 span { color: var(--acc); }
+    .page p { color: var(--muted); font-size: 19px; line-height: 1.5; }
+    .card { background: var(--card); border-radius: 18px; padding: 20px 24px; margin: 24px 0; }
+    .page code { background:#0a1636; padding: 2px 8px; border-radius: 6px; color:#86efac; }
+    :root { --chat--color--primary: #ffd21f; --chat--color--primary-shade-50: #e6bd1a; --chat--color--primary-shade-100: #cca816; --chat--color--secondary: #38bdf8; --chat--header--background: #0a1636; --chat--header--color: #ffffff }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>Reviewer <span>Buddy</span></h1>
+    <p>Ito ang sarili kong web page. Ang chat bubble sa ibabang kanan ay ang AI agent na ginawa natin sa n8n.</p>
+    <div class="card">
+      <p><b>Subukan:</b> <code>Magkano ang final price kung 18% discount sa 2450 pesos, tapos dagdagan ng 12% VAT?</code></p>
+      <p>Tumatakbo ang lahat sa computer ko: n8n, Ollama at ang model. Maaaring abutin ng 30 hanggang 60 segundo ang sagot.</p>
+    </div>
+  </main>
+
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat@1.46.4/dist/chat.bundle.es.js';
+    createChat({
+      webhookUrl: 'http://localhost:5678/webhook/efd8a726-a7ef-4605-9b8a-56a690e79e88/chat',
+      mode: 'window',
+      showWelcomeScreen: false,
+      initialMessages: ['Kumusta! Ako si Reviewer Buddy.', 'Magtanong ka tungkol sa math, at gagamitin ko ang Calculator.'],
+      i18n: { en: { title: 'Reviewer Buddy', subtitle: 'AI agent sa n8n (local)', footer: '', getStarted: 'Simulan', inputPlaceholder: 'Mag-type ng tanong...' } },
+    });
+  </script>
+</body>
+</html>
