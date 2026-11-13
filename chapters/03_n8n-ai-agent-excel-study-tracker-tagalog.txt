@@ -1,0 +1,7 @@
+0:00 Demo: study tracker sa Excel
+0:25 Ano ang kailangan, at bakit CSV
+1:15 Phase A: kopya ng workflow at mga bagong node
+2:49 Pause and try
+3:13 Mga totoong problema at ayos
+6:34 Buksan sa Excel
+8:06 Panoorin ang buong playlist

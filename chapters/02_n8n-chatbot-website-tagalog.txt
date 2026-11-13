@@ -1,7 +1,7 @@
 0:00 Demo: chatbot sa sarili kong web page
-0:44 Ano ang kailangan, at bakit hindi Telegram
-1:56 Phase A: Hosted Chat at Publish
-3:34 Pause and try
-4:47 Phase B: Embedded Chat sa sarili mong page
-8:20 Executions at mga paalala
-10:14 Next: i-save ang mga tanong sa Excel
+0:34 Ano ang kailangan, at bakit hindi Telegram
+1:22 Phase A: Hosted Chat at Publish
+2:31 Pause and try
+3:32 Phase B: Embedded Chat sa sarili mong page
+5:56 Executions at mga paalala
+7:21 Next: i-save ang mga tanong sa Excel

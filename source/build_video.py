@@ -35,6 +35,7 @@ VOICE = "fil-PH-AngeloNeural"
 SHOTS = HERE / "shots"
 SHOTS_INSTALL = HERE / "shots_install"
 SHOTS_PART2 = HERE / "shots_part2"
+SHOTS_PART3 = HERE / "shots_part3"
 TTS = HERE / "_tts"
 TTS.mkdir(exist_ok=True)
 FF = imageio_ffmpeg.get_ffmpeg_exe()
@@ -174,7 +175,7 @@ def draw_hl(d, rects, conv):
 
 
 def shot_img(name):
-    for base in (SHOTS_PART2, SHOTS_INSTALL, SHOTS):
+    for base in (SHOTS_PART3, SHOTS_PART2, SHOTS_INSTALL, SHOTS):
         if (base / f"{name}.jpg").exists():
             return Image.open(base / f"{name}.jpg").convert("RGB")
     raise FileNotFoundError(name)
@@ -473,12 +474,104 @@ def slide_p2_next():
     return img, d  # right half and bottom stay clear for the end-screen element
 
 
-SLIDES = {"p2_needs": slide_p2_needs, "chat_options": slide_chat_options, "embed_code": slide_embed_code, "p2_rules": slide_p2_rules, "p2_results": slide_p2_results, "p2_next": slide_p2_next, "hook_checks": slide_hook_checks, "requirements": slide_requirements, "account_tips": slide_account_tips, "ready": slide_ready, "agent_vs": slide_agent_vs, "needs": slide_needs, "system_message": slide_system, "results": slide_results, "next": slide_next}
+def slide_p3_needs():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Ang kailangan mo (libre lahat)", font=f(72), fill=WHITE)
+    rows = [("1", "Ang workflow mula sa Part 1", "Reviewer Buddy, na may Ollama, Calculator, Wikipedia at memory"), ("2", "n8n at Ollama na tumatakbo", "http://localhost:5678  at  http://127.0.0.1:11434"),
+            ("3", "Excel (o kahit anong spreadsheet)", "Bubuksan nito ang CSV file. Walang Google account.")]
+    y = 230
+    for n, a, c in rows:
+        d.rounded_rectangle((40, y, 1520, y + 150), 30, fill=CARD)
+        d.ellipse((75, y + 35, 155, y + 115), fill=YELLOW)
+        d.text((115 - d.textlength(n, font=f(52)) / 2, y + 45), n, font=f(52), fill=NAVY)
+        d.text((190, y + 20), a, font=f(42), fill=WHITE)
+        d.text((190, y + 88), c, font=f(32), fill=MUTED)
+        y += 168
+    d.text((40, 750), "CSV: madaling dagdagan ng bagong linya.   XLSX: hindi.", font=f(34), fill=YELLOW)
+    return img, d
+
+
+def slide_p3_plan():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Ang plano: 4 na node pagkatapos ng AI Agent", font=f(64), fill=WHITE)
+    boxes = [("AI Agent", "sumasagot", False), ("Edit Fields", "bumubuo ng 1 linya", True), ("Convert to File", "text file", True), ("Write File to Disk", "nagdadagdag (Append)", True), ("Edit Fields", "sagot para sa chat", True)]
+    x = 40
+    for i, (a, b, new) in enumerate(boxes):
+        d.rounded_rectangle((x, 290, x + 270, 520), 28, fill=CARD, outline=YELLOW if new else None, width=5)
+        wrap_draw(d, a, x + 18, 320, 34, YELLOW if new else WHITE, 240, 0.15)
+        wrap_draw(d, b, x + 18, 430, 28, MUTED, 240, 0.15)
+        if i < len(boxes) - 1:
+            d.polygon([(x + 280, 395), (x + 308, 380), (x + 308, 410)], fill=YELLOW)
+        x += 310
+    d.text((40, 600), "Dilaw = mga bagong node.   Ang file: study-log.csv", font=f(36), fill=MUTED)
+    return img, d
+
+
+def slide_p3_folder():
+    img, d = frame_base("AYOS")
+    d.text((40, 110), "Isang folder lang ang pinapayagan", font=f(72), fill=WHITE)
+    d.rounded_rectangle((40, 230, 1520, 410), 30, fill=CARD)
+    d.text((70, 250), "Default", font=f(40), fill=YELLOW)
+    d.text((70, 315), "~/.n8n-files   (nasa user folder mo)", font=fm(36), fill=GREEN)
+    d.rounded_rectangle((40, 440, 1520, 700), 30, fill=CARD, outline=YELLOW, width=4)
+    d.text((70, 460), "Pwede mong palitan (sa akin)", font=f(40), fill=YELLOW)
+    d.text((70, 525), "N8N_RESTRICT_FILE_ACCESS_TO=<folder mo>", font=fm(34), fill=GREEN)
+    d.text((70, 595), "Pagkatapos: i-restart ang n8n", font=f(36), fill=WHITE)
+    d.text((70, 645), "study-log.csv:  date,question,answer   (header, 1 linya)", font=fm(30), fill=MUTED)
+    return img, d
+
+
+def slide_p3_rules():
+    img, d = frame_base("BAGO MO GAMITIN")
+    d.text((40, 110), "3 paalala", font=f(76), fill=WHITE)
+    rows = [("1", "I-check ang mga sagot ng AI", "Mali ang 15% ng 3200: 2720 ang sagot, 480 ang tama."),
+            ("2", "Isang folder lang ang masusulatan ng n8n", "Ang mga ibang path ay: Access to the file is not allowed."),
+            ("3", "CSV para madagdagan, XLSX para sa ganda", "Buksan ang CSV sa Excel, at i-save bilang XLSX kung kailangan.")]
+    y = 250
+    for n, a, b in rows:
+        d.rounded_rectangle((40, y, 1520, y + 190), 30, fill=CARD)
+        d.ellipse((75, y + 55, 155, y + 135), fill=YELLOW)
+        d.text((115 - d.textlength(n, font=f(52)) / 2, y + 65), n, font=f(52), fill=NAVY)
+        d.text((190, y + 30), a, font=f(44), fill=WHITE)
+        d.text((190, y + 105), b, font=f(32), fill=MUTED)
+        y += 215
+    return img, d
+
+
+def slide_p3_results():
+    img, d = frame_base("BUOD NG TEST")
+    d.text((40, 110), "Mga totoong problema at ayos", font=f(72), fill=WHITE)
+    rows = [("Path sa labas ng pinapayagang folder", "Access not allowed", "MALI", False), ("Expression na tinype lang", "literal na text", "MALI", False),
+            ("Default na timezone", "Nov 12, 18:07", "MALI", False), ("Convert to CSV + Append", "magkadikit na linya", "MALI", False),
+            ("Lahat ng ayos, buksan sa Excel", "header + 2 row", "TAMA", True)]
+    y = 230
+    for a, b, c, ok in rows:
+        d.rounded_rectangle((40, y, 1520, y + 105), 26, fill=CARD)
+        d.text((70, y + 28), a, font=f(36), fill=WHITE)
+        d.text((830, y + 26), b, font=f(40), fill=YELLOW)
+        d.rounded_rectangle((1280, y + 18, 1480, y + 86), 34, fill=GREEN if ok else RED)
+        d.text((1380 - d.textlength(c, font=f(36)) / 2, y + 28), c, font=f(36), fill=NAVY)
+        y += 120
+    return img, d
+
+
+def slide_p3_next():
+    img, d = canvas()
+    d.text((100, 200), "Kumpleto na ang serye", font=f(60), fill=MUTED)
+    d.text((100, 280), "Playlist", font=f(140), fill=YELLOW)
+    wrap_draw(d, "0 Setup   1 AI agent   2 Chatbot sa web page   3 Study tracker sa Excel", 100, 450, 48, WHITE, 1000, 0.2)
+    d.rounded_rectangle((100, 640, 1100, 790), 36, fill=CARD, outline=YELLOW, width=4)
+    d.text((140, 662), "Workflow file at chat page", font=f(44), fill=WHITE)
+    d.text((140, 725), "Nasa description", font=f(36), fill=MUTED)
+    return img, d  # right half and bottom stay clear for the end-screen element
+
+
+SLIDES = {"p3_needs": slide_p3_needs, "p3_plan": slide_p3_plan, "p3_folder": slide_p3_folder, "p3_rules": slide_p3_rules, "p3_results": slide_p3_results, "p3_next": slide_p3_next, "p2_needs": slide_p2_needs, "chat_options": slide_chat_options, "embed_code": slide_embed_code, "p2_rules": slide_p2_rules, "p2_results": slide_p2_results, "p2_next": slide_p2_next, "hook_checks": slide_hook_checks, "requirements": slide_requirements, "account_tips": slide_account_tips, "ready": slide_ready, "agent_vs": slide_agent_vs, "needs": slide_needs, "system_message": slide_system, "results": slide_results, "next": slide_next}
 
 
 def frame_slide(sc, sub=""):
     img, d = SLIDES[sc["slide"]]()
-    if sc["slide"] not in ("next", "ready", "p2_next"):
+    if sc["slide"] not in ("next", "ready", "p2_next", "p3_next"):
         subtitle(d, sub)
     return img
 

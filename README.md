@@ -31,4 +31,4 @@ To re-capture screens: `npx n8n start` in `runtime/`, `ollama serve`, `ollama pu
 
 ## Notes
 - The narration was not listened to by the builder. The model is a small 3B model; the video shows its real mistakes.
-- Keep a larger model in mind for the next videos; Part 2 puts the same agent on a web page (hosted chat + embedded widget, see chat-page/); Part 3 is planned for Excel.
+- Keep a larger model in mind for the next videos; Part 2 puts the same agent on a web page (hosted chat + embedded widget, see chat-page/); Part 3 logs every chat to a CSV that opens in Excel (workflow/study-tracker-excel.json: pick your own Ollama credential, set the file path inside your allowed folder, create study-log.csv from workflow/study-log-header.csv).

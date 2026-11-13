@@ -16,7 +16,7 @@ NOTES_LONG = ("Independent tutorial, not affiliated with n8n, Ollama or any AI p
               "and every result shown (including the mistakes) is the real output of the llama3.2:3b model. Narration is a synthetic voice (Filipino text-to-speech) and the presenter is a cartoon. "
               "The model is small and sometimes confused; use a larger model for more reliable results.")
 
-LINKS = [("PLAYLIST", "Playlist link"), ("VIDEO0", "Video 0 link (installation guide)"), ("VIDEO1", "Video 1 link (AI agent tutorial)"), ("VIDEO2", "Video 2 link (web chatbot)"), ("NEXT", "Part 3 link (Excel study tracker, when it exists)")]
+LINKS = [("PLAYLIST", "Playlist link"), ("VIDEO0", "Video 0 link (installation guide)"), ("VIDEO1", "Video 1 link (AI agent tutorial)"), ("VIDEO2", "Video 2 link (web chatbot)"), ("VIDEO3", "Video 3 link (Excel study tracker)")]
 
 ITEMS = [
     dict(id="00", kind="long", video="videos/00_n8n-installation-guide-tagalog.mp4", thumb="thumbnails/00_n8n-installation-guide-tagalog.png",
@@ -68,7 +68,7 @@ ITEMS = [
                 "Two real mistakes: widget color variables with the wrong name, and page CSS that broke the chat window"],
          resources=["Not installed yet? Setup guide: {{VIDEO0}}", "The agent from Part 1: {{VIDEO1}}",
                     "Chat page (index.html) and workflow: https://github.com/JustYuls/n8n-ai-agent-tutorial/tree/main/chat-page",
-                    "n8n chat widget: https://www.npmjs.com/package/@n8n/chat", "Playlist: " + SERIES + ": {{PLAYLIST}}", "Next, Part 3: save the questions and answers in Excel: {{NEXT}}"],
+                    "n8n chat widget: https://www.npmjs.com/package/@n8n/chat", "Playlist: " + SERIES + ": {{PLAYLIST}}", "Next, Part 3: save the questions and answers in Excel: {{VIDEO3}}"],
          notes=("Independent guide, not affiliated with n8n or Ollama. Tested with n8n 2.47.5 and @n8n/chat 1.46.4 on my Windows 11 PC (7 GB RAM, no graphics card); the screens and results are real captures from that session. "
                 "The chat link is localhost, so it only opens on my own computer, and Authentication was set to None for the demo: add Authentication before sharing any chat link. "
                 "Telegram is not used in this part because it is not installed on my PC. Answers take about 20 seconds. Narration is a synthetic voice (Filipino and English text-to-speech) and the presenter is a cartoon."),
@@ -76,17 +76,41 @@ ITEMS = [
          tags=["n8n chatbot website", "n8n chat trigger embedded", "add n8n chatbot to website", "n8n chatbot tutorial", "n8n ai agent tutorial tagalog", "n8n embedded chat",
                "n8n chat widget", "free ai chatbot no api key", "SirYuls TV"],
          pinned="The page code (index.html) is on GitHub, link in the description. Remember: the workflow must be Published, and add Authentication before you share a chat link. "
-                "Which website or page will you put your chatbot on? Tell me below. Next: save the answers in Excel: {{NEXT}}",
+                "Which website or page will you put your chatbot on? Tell me below. Next: save the answers in Excel: {{VIDEO3}}",
          settings=["Add to the playlist as video 2", "Not made for kids", "Altered or synthetic content: yes (synthetic voice, cartoon presenter)",
-                   "End screen (last 15 to 20 s): Part 3 when it exists, otherwise the playlist, plus Subscribe. The right half of the last slide is clear",
+                   "End screen (last 15 to 20 s): Part 3 (the Excel study tracker), plus Subscribe. The right half of the last slide is clear",
                    "Upload the thumbnail and captions/ .srt (Subtitles, English)", "Push the chat-page folder to GitHub before release so the description link works",
+                   "Set the Related video of each Short to this video"]),
+    dict(id="03", kind="long", video="videos/03_n8n-ai-agent-excel-study-tracker-tagalog.mp4", thumb="thumbnails/03_n8n-ai-agent-excel-study-tracker-tagalog.png",
+         chapters="chapters/03_n8n-ai-agent-excel-study-tracker-tagalog.txt", name="Video 3: n8n AI Agent to Excel Study Tracker (Tagalog)",
+         title="n8n AI Agent to Excel (Tagalog): Save Every Chat in a Study Tracker, No Google Sheets",
+         hook="Learn how to save every question and answer of your n8n AI agent in a CSV file that opens in Excel (Tagalog): Edit Fields, Convert to File and Write File to Disk. Free, local, no Google account.",
+         learn=["How to add Edit Fields, Convert to File and Write File to Disk after the AI Agent, and append one row per chat",
+                "Why CSV can be appended and XLSX cannot, and how to open the CSV in Excel",
+                "Four real mistakes: file path not allowed, expressions saved as plain text, the wrong time zone, and rows glued together without a newline",
+                "How to send the agent answer back to the chat, and why you should still check the answers (the small model got 15% of 3200 wrong)"],
+         resources=["Not installed yet? Setup guide: {{VIDEO0}}", "The agent from Part 1: {{VIDEO1}}", "Part 2, the web chatbot: {{VIDEO2}}",
+                    "Workflow JSON (Study Tracker): https://github.com/JustYuls/n8n-ai-agent-tutorial/tree/main/workflow",
+                    "n8n file access setting (N8N_RESTRICT_FILE_ACCESS_TO): https://docs.n8n.io/hosting/configuration/environment-variables/security/",
+                    "Playlist: " + SERIES + ": {{PLAYLIST}}"],
+         notes=("Independent guide, not affiliated with n8n, Microsoft or Ollama. Tested with n8n 2.47.5 and Microsoft Excel on my Windows 11 PC (7 GB RAM, no graphics card); the n8n screens, the file contents and the Excel window are real captures from that session. "
+                "I set N8N_RESTRICT_FILE_ACCESS_TO to my own folder; the default allowed folder is ~/.n8n-files. Answers take about 30 to 45 seconds. The small model can give wrong answers, so check them. "
+                "Narration is a synthetic voice (Filipino text-to-speech) and the presenter is a cartoon."),
+         hashtags="#n8n #Excel #Tagalog",
+         tags=["n8n ai agent excel", "n8n write file to disk", "n8n convert to file csv", "n8n append to csv", "n8n study tracker", "n8n google sheets alternative",
+               "n8n ai agent tutorial tagalog", "save chat to excel", "SirYuls TV"],
+         pinned="The workflow file is on GitHub, link in the description. Remember: n8n can only write inside the folder you allow, and check the answers of the small model (15% of 3200 is 480, not 2720). "
+                "What questions will you log in your tracker? Tell me below. Full playlist: {{PLAYLIST}}",
+         settings=["Add to the playlist as video 3", "Not made for kids", "Altered or synthetic content: yes (synthetic voice, cartoon presenter)",
+                   "End screen (last 15 to 20 s): the playlist, plus Subscribe. The right half of the last slide is clear",
+                   "Upload the thumbnail and captions/ .srt (Subtitles, English)", "Push workflow/study-tracker-excel.json to GitHub before release so the description link works",
                    "Set the Related video of each Short to this video"]),
 ]
 
 PLAYLIST = dict(
     title=SERIES,
     description=("Learn n8n step by step in Tagalog: build AI agents, put them on your website and save results to Excel, and automate your study or work.\n\n"
-                 "Watch in order:\n0. How to Install n8n Locally on Windows 11 (Tagalog)\n1. n8n AI Agent Tutorial for Beginners (Tagalog)\n2. n8n Chatbot for Your Website (Tagalog)\n3. n8n AI Agent with Excel: Study Tracker (coming soon)\n\n" + NOTES_LONG),
+                 "Watch in order:\n0. How to Install n8n Locally on Windows 11 (Tagalog)\n1. n8n AI Agent Tutorial for Beginners (Tagalog)\n2. n8n Chatbot for Your Website (Tagalog)\n3. n8n AI Agent to Excel: Study Tracker (Tagalog)\n\n" + NOTES_LONG),
 )
 
 

@@ -5,7 +5,7 @@ Telegram is not used in this part (not installed on the author's PC); a hosted c
 """
 NAME = "02_n8n-chatbot-website-tagalog"
 SYSTEM_MESSAGE = ""
-MIXED = True  # English terms below are spoken by an English voice; the rest by the Filipino voice
+MIXED = False  # pure Filipino voice (user request); set True for English terms in an English voice
 EN_TERMS = [
     # quoted on-screen English text
     "Chat will be live at the URL above once this workflow is published", "You can now make calls to your production chat URL", "Workflow published",

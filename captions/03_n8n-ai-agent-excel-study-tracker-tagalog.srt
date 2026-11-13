@@ -1,0 +1,436 @@
+1
+00:00:00,350 --> 00:00:01,512
+Tingnan mo ito.
+
+2
+00:00:01,512 --> 00:00:10,804
+Ito ang Excel sheet ko, at nakatala na rito ang mga tanong ko at ang mga sagot ng AI agent ko sa n8n, may petsa at oras.
+
+3
+00:00:10,804 --> 00:00:12,197
+Walang copy-paste.
+
+4
+00:00:12,197 --> 00:00:15,759
+Kusa itong isinulat ng workflow, bawat tanong.
+
+5
+00:00:15,759 --> 00:00:20,173
+Sa video na ito, gagawin natin ang study tracker na iyan.
+
+6
+00:00:20,173 --> 00:00:24,974
+Libre ito, tumatakbo sa computer mo, at walang Google account.
+
+7
+00:00:25,824 --> 00:00:33,383
+Ang kailangan mo ay ang workflow mula sa Part 1, ang n8n at ang Ollama na tumatakbo, at ang Excel.
+
+8
+00:00:33,383 --> 00:00:37,857
+Kung wala ka pang Excel, kahit anong spreadsheet ay pwede.
+
+9
+00:00:37,857 --> 00:00:39,785
+Gagamit tayo ng CSV file.
+
+10
+00:00:39,785 --> 00:00:41,096
+Bakit hindi XLSX?
+
+11
+00:00:41,096 --> 00:00:47,113
+Dahil ang CSV ay madaling dagdagan ng bagong linya, at kayang buksan ng Excel.
+
+12
+00:00:47,113 --> 00:00:51,432
+Ang XLSX ay hindi pwedeng dagdagan nang ganito kasimple.
+
+13
+00:00:52,282 --> 00:00:53,366
+Ito ang plano.
+
+14
+00:00:53,366 --> 00:00:57,701
+Pagkatapos sumagot ng AI Agent, may tatlong bagong node.
+
+15
+00:00:57,701 --> 00:01:02,036
+Una, ang Edit Fields, para buuin ang isang linya ng CSV.
+
+16
+00:01:02,036 --> 00:01:04,436
+Pangalawa, ang Convert to File.
+
+17
+00:01:04,436 --> 00:01:09,546
+Pangatlo, ang Write File to Disk, na magdadagdag ng linya sa file.
+
+18
+00:01:09,546 --> 00:01:14,578
+At sa dulo, isa pang Edit Fields para maibalik ang sagot sa chat.
+
+19
+00:01:15,428 --> 00:01:19,277
+Huwag nating sirain ang workflow mula sa Part 1.
+
+20
+00:01:19,277 --> 00:01:20,961
+Gumawa tayo ng kopya.
+
+21
+00:01:20,961 --> 00:01:25,772
+I-click ang tatlong tuldok sa taas, at piliin ang Duplicate.
+
+22
+00:01:26,622 --> 00:01:31,686
+Bigyan ito ng pangalan, Study Tracker Excel, at i-click ang Duplicate.
+
+23
+00:01:32,536 --> 00:01:34,206
+Binuksan ang kopya.
+
+24
+00:01:34,206 --> 00:01:36,053
+Pareho ito ng Part 1.
+
+25
+00:01:36,053 --> 00:01:41,416
+I-click ang plus sa kanan ng AI Agent para magdagdag ng node.
+
+26
+00:01:42,266 --> 00:01:45,245
+Hanapin ang Edit Fields, at piliin ito.
+
+27
+00:01:45,245 --> 00:01:49,370
+Sa node na ito natin bubuuin ang laman ng bawat linya.
+
+28
+00:01:50,220 --> 00:01:58,178
+Gumawa ako ng tatlong field: date para sa petsa at oras, question para sa tanong, at answer para sa sagot ng agent.
+
+29
+00:01:58,178 --> 00:02:03,852
+Sa value ng bawat isa, nag-type ako ng expression na may dobleng kulot na bracket.
+
+30
+00:02:04,702 --> 00:02:08,758
+Ayan, nasa dulo na ng AI Agent ang Edit Fields.
+
+31
+00:02:09,608 --> 00:02:13,152
+Susunod, idagdag ang Convert to File.
+
+32
+00:02:13,152 --> 00:02:18,037
+Marami itong opsyon: CSV, HTML, JSON, XLS, at XLSX.
+
+33
+00:02:18,037 --> 00:02:20,528
+Piliin ang Convert to CSV.
+
+34
+00:02:21,378 --> 00:02:24,031
+Sa Options, patayin ang Header Row.
+
+35
+00:02:24,031 --> 00:02:28,578
+Ayaw nating maulit ang pamagat ng mga column sa bawat linya.
+
+36
+00:02:29,428 --> 00:02:34,890
+Pangatlo, ang Read/Write Files from Disk, na naka-set sa Write File to Disk.
+
+37
+00:02:34,890 --> 00:02:37,477
+Ilagay ang path at pangalan ng file.
+
+38
+00:02:37,477 --> 00:02:42,220
+At buksan ang Append, para madagdagan ang file at hindi mapalitan.
+
+39
+00:02:43,070 --> 00:02:47,549
+Ito ang itsura ng workflow na may tatlong bagong node.
+
+40
+00:02:47,549 --> 00:02:48,710
+Subukan natin.
+
+41
+00:02:49,560 --> 00:02:50,677
+Pause and try.
+
+42
+00:02:50,677 --> 00:02:59,133
+Sa sarili mong screen, i-duplicate ang workflow, idagdag ang tatlong node, at magpadala ng tanong sa chat.
+
+43
+00:02:59,133 --> 00:03:00,888
+May walong segundo ka.
+
+44
+00:03:13,738 --> 00:03:18,855
+At pumula ang Write File node: Access to the file is not allowed.
+
+45
+00:03:18,855 --> 00:03:20,351
+Common mistake ito.
+
+46
+00:03:20,351 --> 00:03:24,130
+Hindi lahat ng folder ay pwedeng sulatan ng n8n.
+
+47
+00:03:24,980 --> 00:03:28,027
+Pinapayagan lang ng n8n ang isang folder.
+
+48
+00:03:28,027 --> 00:03:33,973
+Ang default ay ang folder na tinatawag na dot n8n dash files, sa user folder mo.
+
+49
+00:03:33,973 --> 00:03:43,560
+Sa akin, nagtakda ako ng sarili kong folder gamit ang environment variable na N8N_RESTRICT_FILE_ACCESS_TO, at nag-restart ng n8n.
+
+50
+00:03:43,560 --> 00:03:45,641
+Gumawa rin ako ng study-log.
+
+51
+00:03:45,641 --> 00:03:51,884
+csv sa loob ng folder na iyon, na may isang linya ng header: date, question, answer.
+
+52
+00:03:52,734 --> 00:03:56,224
+Tumakbo na, pero tingnan ang output ng Edit Fields.
+
+53
+00:03:56,224 --> 00:04:01,424
+Ang laman ay mismong text na may dobleng bracket, hindi ang petsa at tanong.
+
+54
+00:04:01,424 --> 00:04:04,366
+Hindi pala naging expression ang tinype ko.
+
+55
+00:04:04,366 --> 00:04:10,182
+Pangalawang problema: ang chat ay nagbalik ng path ng file, hindi ang sagot ng agent.
+
+56
+00:04:11,032 --> 00:04:17,704
+Sa loob ng node, makikita rin: walang berdeng kulay ang value, ibig sabihin, plain text lang ito.
+
+57
+00:04:18,554 --> 00:04:23,627
+Ang ayos: i-drag ang field mula sa Input sa kaliwa, papunta sa value.
+
+58
+00:04:23,627 --> 00:04:28,773
+Naging berde ito, at ipinapakita ng Result ang totoong sagot ng agent.
+
+59
+00:04:28,773 --> 00:04:32,522
+Pagkatapos, pwede mo nang baguhin ang text sa loob.
+
+60
+00:04:33,372 --> 00:04:36,061
+Pangatlong problema: ang oras.
+
+61
+00:04:36,061 --> 00:04:43,502
+Ang lumabas ay November 12, 6:07 ng gabi, pero umaga ng November 13 sa computer ko.
+
+62
+00:04:43,502 --> 00:04:48,612
+Ang default na timezone ng workflow ay America, New York.
+
+63
+00:04:49,462 --> 00:04:55,233
+Ang ayos: idagdag ang setZone Asia slash Manila sa expression.
+
+64
+00:04:55,233 --> 00:05:00,166
+Ngayon, tama na ang oras: November 13, 7:07 ng umaga.
+
+65
+00:05:01,016 --> 00:05:08,226
+Para maibalik ang sagot sa chat, nagdagdag ako ng isa pang Edit Fields sa dulo, na may field na output.
+
+66
+00:05:08,226 --> 00:05:11,096
+Ang value nito ay ang output ng AI Agent.
+
+67
+00:05:11,946 --> 00:05:13,725
+Ayan ang dulo ng workflow.
+
+68
+00:05:13,725 --> 00:05:21,114
+Ang chat ay laging sumasagot gamit ang output ng huling node, kaya ito dapat ang sagot na gusto mong makita.
+
+69
+00:05:21,964 --> 00:05:23,586
+Subukan ulit.
+
+70
+00:05:23,586 --> 00:05:31,444
+Bumalik na sa chat ang sagot: ang final price ay 2250.08 pesos.
+
+71
+00:05:32,294 --> 00:05:34,099
+Pero tingnan ang file.
+
+72
+00:05:34,099 --> 00:05:39,598
+Nagpadala ako ng dalawang tanong, at ang resulta ng wc dash l ay 0.
+
+73
+00:05:39,598 --> 00:05:41,239
+Walang bagong linya!
+
+74
+00:05:41,239 --> 00:05:45,014
+Magkadikit ang dalawang sagot sa iisang linya.
+
+75
+00:05:45,014 --> 00:05:50,594
+Ang Convert to CSV pala ay hindi naglalagay ng bagong linya sa dulo.
+
+76
+00:05:50,594 --> 00:05:57,898
+May isa pang natuklasan: sa pangalawang tanong, ang sagot ng agent ay 2720, at mali iyon.
+
+77
+00:05:57,898 --> 00:05:59,211
+Ang tama ay 480.
+
+78
+00:05:59,211 --> 00:06:05,366
+Kaya mahalaga ang tracker: nakikita mo ang mga sagot na kailangang i-check.
+
+79
+00:06:06,216 --> 00:06:12,209
+Ang ayos: palitan ang Operation ng Convert to Text File, at ang Text Input Field ay line.
+
+80
+00:06:12,209 --> 00:06:18,000
+Sa Edit Fields na lang natin bubuuin ang buong linya, kasama ang bagong linya sa dulo.
+
+81
+00:06:18,850 --> 00:06:22,678
+Isang field na lang ang natira sa Edit Fields: line.
+
+82
+00:06:22,678 --> 00:06:32,912
+Binubuo nito ang petsa, tanong, at sagot, nakapaloob sa quotes para hindi masira ng kuwit, at may backslash n sa dulo para sa bagong linya.
+
+83
+00:06:32,912 --> 00:06:34,090
+Tama ang Result.
+
+84
+00:06:34,940 --> 00:06:37,120
+Binuksan ko ang study-log.
+
+85
+00:06:37,120 --> 00:06:38,210
+csv sa Excel.
+
+86
+00:06:38,210 --> 00:06:40,474
+Nandoon ang tatlong column.
+
+87
+00:06:40,474 --> 00:06:43,996
+Pero ang petsa ay nagpapakita ng mga hash.
+
+88
+00:06:43,996 --> 00:06:46,009
+Hindi ito error sa data.
+
+89
+00:06:46,009 --> 00:06:48,860
+Masyadong makitid lang ang column.
+
+90
+00:06:49,710 --> 00:06:51,673
+Nag-autofit ako ng column.
+
+91
+00:06:51,673 --> 00:06:54,845
+Ayan: ang petsa, ang tanong, at ang sagot.
+
+92
+00:06:54,845 --> 00:07:02,774
+Pansinin na ginawang tunay na petsa ng Excel ang unang column, kaya pwede mo na itong i-sort at i-filter.
+
+93
+00:07:02,774 --> 00:07:05,190
+Dalawang tanong, dalawang linya.
+
+94
+00:07:06,040 --> 00:07:07,376
+Tatlong paalala.
+
+95
+00:07:07,376 --> 00:07:09,631
+Una, i-check ang mga sagot.
+
+96
+00:07:09,631 --> 00:07:14,642
+Maliit na model ito, at nagkamali ito sa 15 percent ng 3200.
+
+97
+00:07:14,642 --> 00:07:20,070
+Pangalawa, ang n8n ay makakasulat lang sa folder na pinayagan mo.
+
+98
+00:07:20,070 --> 00:07:30,592
+At pangatlo, ang CSV ay madaling dagdagan, pero kapag gusto mo ng ganda at formula, buksan ito sa Excel at i-save bilang XLSX.
+
+99
+00:07:31,442 --> 00:07:34,091
+Ito ang buod ng mga totoong resulta.
+
+100
+00:07:34,091 --> 00:07:37,844
+Ang unang takbo: mali ang path, at hindi pinayagan.
+
+101
+00:07:37,844 --> 00:07:42,848
+Literal na text ang tinype na expression, kaya na-drag ko ang field.
+
+102
+00:07:42,848 --> 00:07:45,202
+Mali ang oras, kaya Asia Manila.
+
+103
+00:07:45,202 --> 00:07:49,249
+At magkadikit ang mga linya, kaya Convert to Text File.
+
+104
+00:07:49,249 --> 00:07:53,738
+Pagkatapos ng lahat, buo na ang file: header at dalawang row.
+
+105
+00:07:54,588 --> 00:07:59,829
+Tanong ko sa iyo: anong mga tanong ang itatala mo sa study tracker mo?
+
+106
+00:07:59,829 --> 00:08:01,476
+I-comment mo sa ibaba.
+
+107
+00:08:07,326 --> 00:08:14,621
+Kumpleto na ang serye: ang setup, ang AI agent, ang chatbot sa web page, at ang study tracker sa Excel.
+
+108
+00:08:14,621 --> 00:08:19,295
+I-click ang playlist sa screen para panoorin ito nang sunod-sunod.
+
+109
+00:08:19,295 --> 00:08:21,774
+Nasa description ang workflow file.
+
