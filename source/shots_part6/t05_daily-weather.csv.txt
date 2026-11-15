@@ -1,0 +1,5 @@
+"2026-11-15 23:16:40","Manila","32.7","26.2","4","Wear light clothes and bring an umbrella to protect yourself from the sun."
+"2026-11-15 23:17:26","Manila","32.7","26.2","4","Bring an umbrella to school because it's only a 4 percent chance of rain today."
+"2026-11-15 23:18:26","Manila","32.7","26.2","4","Bring an umbrella, as it is very unlikely to rain with only 4 percent chance."
+"2026-11-15 23:19:24","Manila","32.7","26.2","4","Bring an umbrella with you to protect yourself from the small chance of rain today."
+"2026-11-15 23:34:02","Manila","32.7","26.2","4","Wear light clothes to stay cool on the hot day with a high of 32.7 degrees Celsius."

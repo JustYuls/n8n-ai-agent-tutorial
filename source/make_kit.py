@@ -16,7 +16,7 @@ NOTES_LONG = ("Independent tutorial, not affiliated with n8n, Ollama or any AI p
               "and every result shown (including the mistakes) is the real output of the llama3.2:3b model. Narration is a synthetic voice (Filipino text-to-speech) and the presenter is a cartoon. "
               "The model is small and sometimes confused; use a larger model for more reliable results.")
 
-LINKS = [("PLAYLIST", "Playlist link"), ("VIDEO0", "Video 0 link (installation guide)"), ("VIDEO1", "Video 1 link (AI agent tutorial)"), ("VIDEO2", "Video 2 link (web chatbot)"), ("VIDEO3", "Video 3 link (Excel study tracker)"), ("VIDEO4", "Video 4 link (webhook and API)"), ("VIDEO5", "Video 5 link (error handling)")]
+LINKS = [("PLAYLIST", "Playlist link"), ("VIDEO0", "Video 0 link (installation guide)"), ("VIDEO1", "Video 1 link (AI agent tutorial)"), ("VIDEO2", "Video 2 link (web chatbot)"), ("VIDEO3", "Video 3 link (Excel study tracker)"), ("VIDEO4", "Video 4 link (webhook and API)"), ("VIDEO5", "Video 5 link (error handling)"), ("VIDEO6", "Video 6 link (Schedule Trigger)")]
 
 ITEMS = [
     dict(id="00", kind="long", video="videos/00_n8n-installation-guide-tagalog.mp4", thumb="thumbnails/00_n8n-installation-guide-tagalog.png",
@@ -152,12 +152,36 @@ ITEMS = [
                    "End screen (last 15 to 20 s): the playlist, plus Subscribe. The right half of the last slide is clear",
                    "Upload the thumbnail and captions/ .srt (Subtitles, English)", "Push workflow/weather-webhook-safe.json and workflow/error-logger.json to GitHub before release so the description link works",
                    "Set the Related video of each Short to this video"]),
+    dict(id="06", kind="long", video="videos/06_n8n-schedule-trigger-tagalog.mp4", thumb="thumbnails/06_n8n-schedule-trigger-tagalog.png",
+         chapters="chapters/06_n8n-schedule-trigger-tagalog.txt", name="Video 6: n8n Schedule Trigger Tutorial (Tagalog)",
+         title="n8n Schedule Trigger Tutorial (Tagalog): Run a Workflow Every Day Automatically",
+         hook="Learn how to run an n8n workflow by itself on a schedule (Tagalog): a Schedule Trigger, the Open-Meteo daily forecast, a local AI advice line and a CSV file that grows every day. Free and local.",
+         learn=["What the Schedule Trigger does and its interval options: Seconds, Minutes, Hours, Days, Weeks, Months and Custom (Cron)",
+                "How to build a daily 7:00 AM weather report that appends one CSV line per run, with the Part 5 fallback on the AI step",
+                "Real mistakes: a schedule that does nothing until you Publish, and a default New York timezone that missed a trigger set for Manila time",
+                "How to read the Executions list and check the file to prove the schedule really ran"],
+         resources=["Not installed yet? Setup guide: {{VIDEO0}}", "Part 5, error handling and the Error logger: {{VIDEO5}}", "Part 3, writing files and the allowed folder: {{VIDEO3}}",
+                    "Workflow JSON (daily-weather-report): https://github.com/JustYuls/n8n-ai-agent-tutorial/tree/main/workflow",
+                    "Open-Meteo (free weather API): https://open-meteo.com", "Playlist: " + SERIES + ": {{PLAYLIST}}"],
+         notes=("Independent guide, not affiliated with n8n, Open-Meteo or Ollama. Tested with n8n 2.47.5 on my Windows 11 PC (7 GB RAM, no graphics card); the n8n screens and every terminal output are real, including the mistakes. "
+                "To see results quickly I used an every-minute trigger for testing; the workflow file has the final daily 7:00 AM trigger with the Asia/Manila timezone. In my n8n the default workflow timezone was America/New_York; check yours in the workflow settings. "
+                "n8n must be running when the time comes. Weather data from Open-Meteo.com (CC BY 4.0). Import the file, pick your own Ollama account, and put the CSV path inside the folder n8n is allowed to write (see Part 3). "
+                "The advice comes from a small local model and can be wrong. Narration is a synthetic voice (Filipino text-to-speech) and the presenter is a cartoon."),
+         hashtags="#n8n #ScheduleTrigger #Tagalog",
+         tags=["n8n schedule trigger", "n8n schedule trigger tutorial", "n8n cron", "n8n run workflow every day", "n8n timezone", "n8n automation tagalog",
+               "n8n tutorial for beginners tagalog", "n8n daily report", "SirYuls TV"],
+         pinned="The workflow file is on GitHub, link in the description. Remember: a schedule does nothing until the workflow is Published, and set the workflow timezone (the default in my n8n was New York). "
+                "What report do you want built for you every morning? Tell me below. Full playlist: {{PLAYLIST}}",
+         settings=["Add to the playlist as video 6", "Not made for kids", "Altered or synthetic content: yes (synthetic voice, cartoon presenter)",
+                   "End screen (last 15 to 20 s): the playlist, plus Subscribe. The right half of the last slide is clear",
+                   "Upload the thumbnail and captions/ .srt (Subtitles, English)", "Push workflow/daily-weather-report.json to GitHub before release so the description link works",
+                   "Set the Related video of each Short to this video"]),
 ]
 
 PLAYLIST = dict(
     title=SERIES,
     description=("Learn n8n step by step in Tagalog: build AI agents, put them on your website and save results to Excel, and automate your study or work.\n\n"
-                 "Watch in order:\n0. How to Install n8n Locally on Windows 11 (Tagalog)\n1. n8n AI Agent Tutorial for Beginners (Tagalog)\n2. n8n Chatbot for Your Website (Tagalog)\n3. n8n AI Agent to Excel: Study Tracker (Tagalog)\n4. n8n Webhook Tutorial: Call a Free Weather API (Tagalog)\n5. n8n Error Handling Tutorial (Tagalog)\n\n" + NOTES_LONG),
+                 "Watch in order:\n0. How to Install n8n Locally on Windows 11 (Tagalog)\n1. n8n AI Agent Tutorial for Beginners (Tagalog)\n2. n8n Chatbot for Your Website (Tagalog)\n3. n8n AI Agent to Excel: Study Tracker (Tagalog)\n4. n8n Webhook Tutorial: Call a Free Weather API (Tagalog)\n5. n8n Error Handling Tutorial (Tagalog)\n6. n8n Schedule Trigger Tutorial (Tagalog)\n\n" + NOTES_LONG),
 )
 
 

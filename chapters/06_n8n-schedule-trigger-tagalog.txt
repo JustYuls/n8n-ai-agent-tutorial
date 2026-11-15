@@ -1,0 +1,9 @@
+0:00 Demo: kusang tumakbo, walang nag-click
+0:25 Ano ang Schedule Trigger
+1:26 Ang workflow at ang mga node
+3:45 Pause and try
+4:10 Pagkakamali: hindi pa naka-Publish
+4:42 Ang ayos: Publish
+5:13 Pagkakamali: maling timezone
+6:35 Verification at mga paalala
+7:36 Susunod: Part 7

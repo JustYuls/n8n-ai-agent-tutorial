@@ -38,6 +38,7 @@ SHOTS_PART2 = HERE / "shots_part2"
 SHOTS_PART3 = HERE / "shots_part3"
 SHOTS_PART4 = HERE / "shots_part4"
 SHOTS_PART5 = HERE / "shots_part5"
+SHOTS_PART6 = HERE / "shots_part6"
 TTS = HERE / "_tts"
 TTS.mkdir(exist_ok=True)
 FF = imageio_ffmpeg.get_ffmpeg_exe()
@@ -177,7 +178,7 @@ def draw_hl(d, rects, conv):
 
 
 def shot_img(name):
-    for base in (SHOTS_PART5, SHOTS_PART4, SHOTS_PART3, SHOTS_PART2, SHOTS_INSTALL, SHOTS):
+    for base in (SHOTS_PART6, SHOTS_PART5, SHOTS_PART4, SHOTS_PART3, SHOTS_PART2, SHOTS_INSTALL, SHOTS):
         if (base / f"{name}.jpg").exists():
             return Image.open(base / f"{name}.jpg").convert("RGB")
     raise FileNotFoundError(name)
@@ -739,12 +740,91 @@ def slide_p5_next():
     return img, d  # right half and bottom stay clear for the end-screen element
 
 
-SLIDES = {"p5_idea": slide_p5_idea, "p5_needs": slide_p5_needs, "p5_plan": slide_p5_plan, "p5_rules": slide_p5_rules, "p5_results": slide_p5_results, "p5_next": slide_p5_next, "p4_idea": slide_p4_idea, "p4_needs": slide_p4_needs, "p4_plan": slide_p4_plan, "p4_rules": slide_p4_rules, "p4_results": slide_p4_results, "p4_next": slide_p4_next, "p3_needs": slide_p3_needs, "p3_plan": slide_p3_plan, "p3_folder": slide_p3_folder, "p3_rules": slide_p3_rules, "p3_results": slide_p3_results, "p3_next": slide_p3_next, "p2_needs": slide_p2_needs, "chat_options": slide_chat_options, "embed_code": slide_embed_code, "p2_rules": slide_p2_rules, "p2_results": slide_p2_results, "p2_next": slide_p2_next, "hook_checks": slide_hook_checks, "requirements": slide_requirements, "account_tips": slide_account_tips, "ready": slide_ready, "agent_vs": slide_agent_vs, "needs": slide_needs, "system_message": slide_system, "results": slide_results, "next": slide_next}
+def slide_p6_idea():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Ang Schedule Trigger: alarm clock ng workflow", font=f(64), fill=WHITE)
+    cards = [("Seconds, Minutes, Hours", "Pang-test o madalas na takbo. Sa video na ito: bawat 1 minuto muna."),
+             ("Days, Weeks, Months", "Sa oras na pipiliin mo. Ang final natin: araw-araw, 7:00 AM."),
+             ("Custom (Cron)", "Para sa mas komplikadong iskedyul. Hindi natin gagamitin ngayon.")]
+    x = 40
+    for i, (a, b) in enumerate(cards):
+        d.rounded_rectangle((x, 250, x + 470, 700), 30, fill=CARD, outline=YELLOW if i < 2 else None, width=5)
+        wrap_draw(d, a, x + 24, 280, 44, YELLOW, 420, 0.2)
+        wrap_draw(d, b, x + 24, 420, 34, WHITE, 420, 0.2)
+        x += 505
+    return img, d
+
+
+def slide_p6_needs():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Ang kailangan mo (libre lahat)", font=f(72), fill=WHITE)
+    _p4_cards(d, [("1", "n8n at Ollama na tumatakbo", "Galing sa Part 1. Kailangang bukas ang n8n kapag oras na ng iskedyul."),
+                  ("2", "Ang Error logger mula sa Part 5", "Para itala kung may pumalya sa kusang takbo."),
+                  ("3", "Folder na pinapayagan ng n8n", "Tulad ng Part 3. Dito isusulat ang daily-weather.csv.")], 230, 168, 150)
+    d.text((40, 750), "Ang workflow file: daily-weather-report (nasa description)", font=f(34), fill=YELLOW)
+    return img, d
+
+
+def slide_p6_plan():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Ang plano: kusang tatakbo araw-araw", font=f(68), fill=WHITE)
+    rows = [[("Schedule Trigger", "araw-araw, 7:00 AM"), ("Get weather", "Open-Meteo: max, min, ulan"), ("Weather facts", "city, max, min, rain"), ("Advice", "AI + fallback (Part 5)")],
+            [("Build line", "isang linya ng CSV"), ("Convert to File", "text file"), ("Write File to Disk", "Append: daily-weather.csv")]]
+    for ri, boxes in enumerate(rows):
+        x, y = 40, 270 + ri * 250
+        for i, (a, b) in enumerate(boxes):
+            d.rounded_rectangle((x, y, x + 330, y + 200), 26, fill=CARD, outline=YELLOW, width=4)
+            wrap_draw(d, a, x + 16, y + 20, 34, WHITE, 300, 0.15)
+            wrap_draw(d, b, x + 16, y + 110, 26, MUTED, 300, 0.15)
+            if i < len(boxes) - 1:
+                d.polygon([(x + 338, y + 100), (x + 362, y + 87), (x + 362, y + 113)], fill=YELLOW)
+            x += 372
+    return img, d
+
+
+def slide_p6_rules():
+    img, d = frame_base("BAGO MO GAMITIN")
+    d.text((40, 110), "3 paalala", font=f(76), fill=WHITE)
+    _p4_cards(d, [("1", "Hindi tatakbo ang iskedyul hangga't hindi naka-Publish", "Execute workflow ay pang-test lang. Ang kusang takbo ay nasa Executions."),
+                  ("2", "Itakda ang timezone ng workflow", "Default ay New York: ang 7 AM doon ay 8 PM sa Manila. Piliin ang Asia/Manila."),
+                  ("3", "Hindi eksakto ang segundo, at i-check ang payo", "May kaunting pagitan ang simula. At 4 percent lang ang ulan, payong pa rin ang payo.")], 235, 190, 165, size_a=38)
+    return img, d
+
+
+def slide_p6_results():
+    img, d = frame_base("BUOD NG TEST")
+    d.text((40, 110), "Mga totoong resulta", font=f(72), fill=WHITE)
+    rows = [("Trigger na hindi naka-Publish", "walang tumakbo", "MALI", False), ("Naka-Publish: bawat minuto", "4 na linya, kusa", "TAMA", True),
+            ("Daily 23:27, timezone New York", "walang tumakbo", "MALI", False), ("Daily 23:33, timezone Manila", "tumakbo, may linya", "TAMA", True),
+            ("Payo ng AI sa 4 percent na ulan", "payong pa rin", "MALI", False), ("Final: daily 7:00 AM, Manila", "handa na (Publish)", "TAMA", True)]
+    y = 205
+    for a, b, c, ok in rows:
+        d.rounded_rectangle((40, y, 1520, y + 88), 24, fill=CARD)
+        d.text((70, y + 22), a, font=f(36), fill=WHITE)
+        d.text((830, y + 20), b, font=f(40), fill=YELLOW)
+        d.rounded_rectangle((1280, y + 12, 1480, y + 76), 32, fill=GREEN if ok else RED)
+        d.text((1380 - d.textlength(c, font=f(36)) / 2, y + 22), c, font=f(36), fill=NAVY)
+        y += 100
+    return img, d
+
+
+def slide_p6_next():
+    img, d = canvas()
+    d.text((100, 200), "Hindi pa tapos ang serye", font=f(60), fill=MUTED)
+    d.text((100, 280), "Part 7", font=f(140), fill=YELLOW)
+    wrap_draw(d, "Chat sa sarili mong notes: ang AI na sumasagot mula sa mga file mo", 100, 450, 48, WHITE, 1000, 0.2)
+    d.rounded_rectangle((100, 640, 1100, 790), 36, fill=CARD, outline=YELLOW, width=4)
+    d.text((140, 662), "Workflow file: daily-weather-report", font=f(44), fill=WHITE)
+    d.text((140, 725), "Nasa description", font=f(36), fill=MUTED)
+    return img, d  # right half and bottom stay clear for the end-screen element
+
+
+SLIDES = {"p6_idea": slide_p6_idea, "p6_needs": slide_p6_needs, "p6_plan": slide_p6_plan, "p6_rules": slide_p6_rules, "p6_results": slide_p6_results, "p6_next": slide_p6_next, "p5_idea": slide_p5_idea, "p5_needs": slide_p5_needs, "p5_plan": slide_p5_plan, "p5_rules": slide_p5_rules, "p5_results": slide_p5_results, "p5_next": slide_p5_next, "p4_idea": slide_p4_idea, "p4_needs": slide_p4_needs, "p4_plan": slide_p4_plan, "p4_rules": slide_p4_rules, "p4_results": slide_p4_results, "p4_next": slide_p4_next, "p3_needs": slide_p3_needs, "p3_plan": slide_p3_plan, "p3_folder": slide_p3_folder, "p3_rules": slide_p3_rules, "p3_results": slide_p3_results, "p3_next": slide_p3_next, "p2_needs": slide_p2_needs, "chat_options": slide_chat_options, "embed_code": slide_embed_code, "p2_rules": slide_p2_rules, "p2_results": slide_p2_results, "p2_next": slide_p2_next, "hook_checks": slide_hook_checks, "requirements": slide_requirements, "account_tips": slide_account_tips, "ready": slide_ready, "agent_vs": slide_agent_vs, "needs": slide_needs, "system_message": slide_system, "results": slide_results, "next": slide_next}
 
 
 def frame_slide(sc, sub=""):
     img, d = SLIDES[sc["slide"]]()
-    if sc["slide"] not in ("next", "ready", "p2_next", "p3_next", "p4_next", "p5_next"):
+    if sc["slide"] not in ("next", "ready", "p2_next", "p3_next", "p4_next", "p5_next", "p6_next"):
         subtitle(d, sub)
     return img
 
