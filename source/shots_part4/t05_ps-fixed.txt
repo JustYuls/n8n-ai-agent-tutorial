@@ -1,0 +1,3 @@
+﻿{"city":"Manila","temp":28.1,"humidity":68,"advice":"\"Stay in the shade and wear light clothes to beat the heat of 28.1 degrees.\""}
+HTTP 200  5.857922s
+

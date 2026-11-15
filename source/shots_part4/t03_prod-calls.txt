@@ -1,0 +1,12 @@
+== Manila ==
+{"city":"Manila","temp":28.1,"humidity":68,"advice":"Bring a hat and wear light clothes to stay cool outside."}
+HTTP 200  19.199044s
+== Manila ==
+{"city":"Manila","temp":28.1,"humidity":68,"advice":"\"Go out and enjoy the day, but don't forget to wear light clothes to stay cool and comfortable.\""}
+HTTP 200  5.397698s
+== Cebu ==
+{"city":"Cebu","temp":23.5,"humidity":90,"advice":"Wear light clothes and bring a hat to protect you from the hot and humid weather."}
+HTTP 200  7.883966s
+== Zzqxyw ==
+{"error":"City not found","tip":"Check the spelling of the city."}
+HTTP 404  1.160356s

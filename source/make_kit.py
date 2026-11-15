@@ -16,7 +16,7 @@ NOTES_LONG = ("Independent tutorial, not affiliated with n8n, Ollama or any AI p
               "and every result shown (including the mistakes) is the real output of the llama3.2:3b model. Narration is a synthetic voice (Filipino text-to-speech) and the presenter is a cartoon. "
               "The model is small and sometimes confused; use a larger model for more reliable results.")
 
-LINKS = [("PLAYLIST", "Playlist link"), ("VIDEO0", "Video 0 link (installation guide)"), ("VIDEO1", "Video 1 link (AI agent tutorial)"), ("VIDEO2", "Video 2 link (web chatbot)"), ("VIDEO3", "Video 3 link (Excel study tracker)")]
+LINKS = [("PLAYLIST", "Playlist link"), ("VIDEO0", "Video 0 link (installation guide)"), ("VIDEO1", "Video 1 link (AI agent tutorial)"), ("VIDEO2", "Video 2 link (web chatbot)"), ("VIDEO3", "Video 3 link (Excel study tracker)"), ("VIDEO4", "Video 4 link (webhook and API)")]
 
 ITEMS = [
     dict(id="00", kind="long", video="videos/00_n8n-installation-guide-tagalog.mp4", thumb="thumbnails/00_n8n-installation-guide-tagalog.png",
@@ -105,12 +105,35 @@ ITEMS = [
                    "End screen (last 15 to 20 s): the playlist, plus Subscribe. The right half of the last slide is clear",
                    "Upload the thumbnail and captions/ .srt (Subtitles, English)", "Push workflow/study-tracker-excel.json to GitHub before release so the description link works",
                    "Set the Related video of each Short to this video"]),
+    dict(id="04", kind="long", video="videos/04_n8n-webhook-api-tagalog.mp4", thumb="thumbnails/04_n8n-webhook-api-tagalog.png",
+         chapters="chapters/04_n8n-webhook-api-tagalog.txt", name="Video 4: n8n Webhook and API Tutorial (Tagalog)",
+         title="n8n Webhook Tutorial for Beginners (Tagalog): Call a Free Weather API with AI Advice",
+         hook="Learn how to start an n8n workflow with a webhook call (Tagalog): receive a city name, call the free Open-Meteo API, let a local AI write one line of advice, and send the answer back. No account, no API key.",
+         learn=["What a webhook and an API are, and how the Webhook node, two HTTP Request nodes, Edit Fields, an AI node and Respond to Webhook fit together",
+                "Test URL versus Production URL: why the second Test URL call gives 404, and why the production URL needs Publish",
+                "Real mistakes: listening on the node only (empty answer), an API timeout fixed with Retry On Fail, and broken JSON quotes in PowerShell (422)",
+                "How to answer a wrong city name with a 404 branch, and how to check the numbers against the API (28.1 degrees and 68 percent matched)"],
+         resources=["Not installed yet? Setup guide: {{VIDEO0}}", "The agent from Part 1: {{VIDEO1}}", "Part 3, the Excel tracker: {{VIDEO3}}",
+                    "Workflow JSON (Weather Webhook): https://github.com/JustYuls/n8n-ai-agent-tutorial/tree/main/workflow",
+                    "Open-Meteo (free weather API): https://open-meteo.com", "Playlist: " + SERIES + ": {{PLAYLIST}}"],
+         notes=("Independent guide, not affiliated with n8n, Open-Meteo or Ollama. Tested with n8n 2.47.5 on my Windows 11 PC (7 GB RAM, no graphics card); the n8n screens and every terminal output are real, including the mistakes. "
+                "Weather data from Open-Meteo.com (CC BY 4.0). The geocoding API was slow while I recorded, and that timeout is real. The advice line comes from a small local model (llama3.2:3b) and can be wrong: it mentioned rain that was not in the data. "
+                "Import the workflow file and pick your own Ollama account in the Ollama Chat Model node. Narration is a synthetic voice (Filipino text-to-speech) and the presenter is a cartoon."),
+         hashtags="#n8n #Webhook #Tagalog",
+         tags=["n8n webhook tutorial", "n8n webhook tagalog", "n8n http request tutorial", "n8n respond to webhook", "n8n test url vs production url", "n8n weather api",
+               "open-meteo n8n", "n8n tutorial for beginners tagalog", "n8n retry on fail", "SirYuls TV"],
+         pinned="The workflow file is on GitHub, link in the description. Remember: the Test URL works once after Execute workflow, and the Production URL needs Publish. "
+                "In PowerShell, put a backslash before each quote inside the JSON. Which API will you connect next? Tell me below. Full playlist: {{PLAYLIST}}",
+         settings=["Add to the playlist as video 4", "Not made for kids", "Altered or synthetic content: yes (synthetic voice, cartoon presenter)",
+                   "End screen (last 15 to 20 s): the playlist, plus Subscribe. The right half of the last slide is clear",
+                   "Upload the thumbnail and captions/ .srt (Subtitles, English)", "Push workflow/weather-webhook.json to GitHub before release so the description link works",
+                   "Set the Related video of each Short to this video"]),
 ]
 
 PLAYLIST = dict(
     title=SERIES,
     description=("Learn n8n step by step in Tagalog: build AI agents, put them on your website and save results to Excel, and automate your study or work.\n\n"
-                 "Watch in order:\n0. How to Install n8n Locally on Windows 11 (Tagalog)\n1. n8n AI Agent Tutorial for Beginners (Tagalog)\n2. n8n Chatbot for Your Website (Tagalog)\n3. n8n AI Agent to Excel: Study Tracker (Tagalog)\n\n" + NOTES_LONG),
+                 "Watch in order:\n0. How to Install n8n Locally on Windows 11 (Tagalog)\n1. n8n AI Agent Tutorial for Beginners (Tagalog)\n2. n8n Chatbot for Your Website (Tagalog)\n3. n8n AI Agent to Excel: Study Tracker (Tagalog)\n4. n8n Webhook Tutorial: Call a Free Weather API (Tagalog)\n\n" + NOTES_LONG),
 )
 
 

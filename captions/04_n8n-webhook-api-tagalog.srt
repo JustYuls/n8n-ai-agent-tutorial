@@ -1,0 +1,512 @@
+1
+00:00:00,350 --> 00:00:01,508
+Tingnan mo ito.
+
+2
+00:00:01,508 --> 00:00:08,147
+Sa PowerShell, isang command lang ang tinype ko, at ang pangalan ng lungsod ay Manila.
+
+3
+00:00:08,147 --> 00:00:19,418
+Pagkalipas ng halos anim na segundo, bumalik ang totoong temperatura, 28.1 degrees, ang humidity na 68 percent, at isang linya ng payo mula sa AI.
+
+4
+00:00:19,418 --> 00:00:21,657
+Walang chat, at walang click.
+
+5
+00:00:21,657 --> 00:00:22,969
+Isang tawag lang.
+
+6
+00:00:22,969 --> 00:00:30,998
+Sa video na ito, gagawin natin ang workflow na iyan, at ipapakita ko rin ang mga totoong pagkakamali ko.
+
+7
+00:00:31,848 --> 00:00:33,049
+Ano ang webhook?
+
+8
+00:00:33,049 --> 00:00:36,200
+Isa itong address na naghihintay ng tawag.
+
+9
+00:00:36,200 --> 00:00:39,426
+Kapag may tumawag, tatakbo ang workflow mo.
+
+10
+00:00:39,426 --> 00:00:42,653
+Parang doorbell: may pumindot, may sasagot.
+
+11
+00:00:42,653 --> 00:00:46,179
+At ang API ay parang bintana ng ibang serbisyo.
+
+12
+00:00:46,179 --> 00:00:53,232
+Tatawagin natin ang Open-Meteo, isang libreng weather API na walang account at walang API key.
+
+13
+00:00:54,082 --> 00:00:59,201
+Ang kailangan mo ay n8n at Ollama na tumatakbo, galing sa Part 1.
+
+14
+00:00:59,201 --> 00:01:03,847
+Ang PowerShell sa Windows 11, na may kasamang curl dot exe.
+
+15
+00:01:03,847 --> 00:01:06,051
+At ang Open-Meteo, na libre.
+
+16
+00:01:06,051 --> 00:01:11,170
+Nasa description ang workflow file, kaya pwede mo itong i-import.
+
+17
+00:01:12,020 --> 00:01:13,064
+Ito ang plano.
+
+18
+00:01:13,064 --> 00:01:17,238
+Una, ang Webhook, na tumatanggap ng pangalan ng lungsod.
+
+19
+00:01:17,238 --> 00:01:21,189
+Pangalawa, ang HTTP Request na naghahanap sa lungsod.
+
+20
+00:01:21,189 --> 00:01:25,960
+Pangatlo, isa pang HTTP Request para sa temperatura at humidity.
+
+21
+00:01:25,960 --> 00:01:29,165
+Pang-apat, ang AI na susulat ng isang payo.
+
+22
+00:01:29,165 --> 00:01:33,638
+At panghuli, ang Respond to Webhook, na magbabalik ng sagot.
+
+23
+00:01:33,638 --> 00:01:38,036
+Mayroon ding isang daan para sa maling pangalan ng lungsod.
+
+24
+00:01:38,886 --> 00:01:40,556
+Ito ang buong workflow.
+
+25
+00:01:40,556 --> 00:01:43,823
+Sa kaliwa ang Webhook, at sa kanan ang Reply.
+
+26
+00:01:43,823 --> 00:01:51,302
+Sa gitna ang Find city, City found, Get weather, Weather facts, at ang Advice na may Ollama Chat Model.
+
+27
+00:01:51,302 --> 00:01:56,022
+Sa ibaba, ang City not found, para sa maling pangalan ng lungsod.
+
+28
+00:01:56,872 --> 00:01:59,074
+Buksan natin ang Webhook node.
+
+29
+00:01:59,074 --> 00:02:02,231
+Ang method ay POST, at ang path ay weather.
+
+30
+00:02:02,231 --> 00:02:04,653
+May dalawang address ang webhook.
+
+31
+00:02:04,653 --> 00:02:13,168
+Ang Test URL ay nagtatapos sa webhook dash test slash weather, at pang-test lang ito habang binubuo mo ang workflow.
+
+32
+00:02:14,018 --> 00:02:18,300
+Ang Production URL naman ay webhook slash weather, walang test.
+
+33
+00:02:18,300 --> 00:02:22,174
+Tandaan ang pagkakaiba nila, dahil dito tayo magkakamali.
+
+34
+00:02:22,174 --> 00:02:30,194
+Pansinin din ang Respond: naka-set ito sa Using Respond to Webhook Node, kaya ang huling node ang magbibigay ng sagot.
+
+35
+00:02:31,044 --> 00:02:32,371
+Unang pagkakamali.
+
+36
+00:02:32,371 --> 00:02:39,300
+Nag-click ako ng Listen for test event sa mismong Webhook node, at tumawag ako gamit ang curl.
+
+37
+00:02:40,150 --> 00:02:42,402
+Walang laman ang sagot!
+
+38
+00:02:42,402 --> 00:02:48,670
+HTTP 200 ang lumabas, pero walang resulta, at 0.25 segundo lang.
+
+39
+00:02:49,520 --> 00:02:54,224
+Sa screen, dumating naman ang data: ang body ay may city na Manila.
+
+40
+00:02:54,224 --> 00:02:57,453
+Pero isang node lang ang tumakbo, ang Webhook.
+
+41
+00:02:57,453 --> 00:03:01,736
+Ang Listen sa loob ng node ay pang-test ng node na iyon lang.
+
+42
+00:03:02,586 --> 00:03:06,766
+Pangalawang pagkakamali: tinawag ko ulit ang Test URL.
+
+43
+00:03:06,766 --> 00:03:11,644
+Error na: 404, the requested webhook weather is not registered.
+
+44
+00:03:11,644 --> 00:03:17,063
+Sabi ng hint, i-click ang Execute workflow sa canvas, at subukan ulit.
+
+45
+00:03:17,063 --> 00:03:22,482
+Sa test mode, isang tawag lang ang gumagana pagkatapos mong mag-click.
+
+46
+00:03:23,332 --> 00:03:28,619
+Ang ayos: i-click ang Execute workflow sa canvas, hindi sa loob ng node.
+
+47
+00:03:28,619 --> 00:03:31,629
+Naghihintay na ngayon ang buong workflow.
+
+48
+00:03:31,629 --> 00:03:35,668
+Nakasulat pa nga: Waiting for you to call the Test URL.
+
+49
+00:03:36,518 --> 00:03:39,427
+Tumawag ako, at pumula ang Find city.
+
+50
+00:03:39,427 --> 00:03:41,392
+The connection timed out.
+
+51
+00:03:41,392 --> 00:03:44,773
+Totoong nangyari ito habang nire-record ko.
+
+52
+00:03:44,773 --> 00:03:53,342
+Mabagal ang geocoding API noong oras na iyon, at nag-error ang buong workflow pagkalipas ng halos 22 segundo.
+
+53
+00:03:54,192 --> 00:03:57,923
+Ang ayos ay nasa Settings ng node: Retry On Fail.
+
+54
+00:03:57,923 --> 00:04:03,406
+Ang Max Tries ay 3, at maghihintay ito ng 1500 milliseconds bago ulitin.
+
+55
+00:04:03,406 --> 00:04:09,117
+Nilagay ko ito sa Find city at sa Get weather, ang dalawang tawag sa labas.
+
+56
+00:04:09,117 --> 00:04:14,448
+Hindi nito ginagarantiya na laging gagana, pero mas malaki ang tsansa.
+
+57
+00:04:15,298 --> 00:04:16,333
+Subukan ulit.
+
+58
+00:04:16,333 --> 00:04:21,192
+Berde na ang lahat ng node, at may isang item sa bawat linya.
+
+59
+00:04:21,192 --> 00:04:23,661
+Workflow executed successfully.
+
+60
+00:04:23,661 --> 00:04:28,042
+Ang daan ng True ang tumakbo, hindi ang City not found.
+
+61
+00:04:28,892 --> 00:04:30,026
+Pause and try.
+
+62
+00:04:30,026 --> 00:04:39,662
+Sa sarili mong screen, i-import ang workflow file, i-click ang Execute workflow, at tumawag sa Test URL gamit ang curl.
+
+63
+00:04:39,662 --> 00:04:41,444
+May walong segundo ka.
+
+64
+00:04:54,294 --> 00:04:57,178
+Tingnan natin ang dalawang HTTP Request.
+
+65
+00:04:57,178 --> 00:05:00,928
+Ang Find city ay GET sa geocoding API ng Open-Meteo.
+
+66
+00:05:00,928 --> 00:05:06,263
+Ang query parameters ay name, na galing sa body ng webhook, at count na 1.
+
+67
+00:05:06,263 --> 00:05:10,950
+Ang resulta sa kanan ay Manila, kasama ang latitude at longitude.
+
+68
+00:05:11,800 --> 00:05:14,902
+Ang Get weather naman ay GET sa forecast API.
+
+69
+00:05:14,902 --> 00:05:22,967
+Ipinapasa natin ang latitude at longitude mula sa Find city, at hinihingi natin ang temperature at relative humidity.
+
+70
+00:05:22,967 --> 00:05:26,896
+Ang sagot ay may seksyong current, na may totoong halaga.
+
+71
+00:05:27,746 --> 00:05:35,891
+Ang Edit Fields na pinangalanang Weather facts ay pumipili lang ng kailangan: city, temp, at humidity.
+
+72
+00:05:35,891 --> 00:05:39,484
+Ang temp dito ay 28.1, at ang humidity ay 68.
+
+73
+00:05:39,484 --> 00:05:45,074
+Ito ang mga numerong ibibigay natin sa AI, para hindi ito mag-imbento.
+
+74
+00:05:45,924 --> 00:05:54,862
+Sa Advice node, ang prompt ay ang panahon ngayon sa lungsod, ang temp at humidity, at isang maikling payo lang sa simpleng English.
+
+75
+00:05:54,862 --> 00:05:58,819
+Kasama ang utos na gamitin lang ang mga numerong ibinigay.
+
+76
+00:05:58,819 --> 00:06:03,254
+Ang sagot ng model: Bring an umbrella to cover you from the rain.
+
+77
+00:06:03,254 --> 00:06:05,437
+Pero walang ulan sa datos natin!
+
+78
+00:06:05,437 --> 00:06:09,804
+Totoo ang numero, pero opinyon lang ng maliit na model ang payo.
+
+79
+00:06:10,654 --> 00:06:13,982
+Ang huling node ay ang Respond to Webhook.
+
+80
+00:06:13,982 --> 00:06:19,291
+Ang response body ay isang object: city, temp, humidity, at advice.
+
+81
+00:06:19,291 --> 00:06:21,430
+Ito ang babalik sa tumawag.
+
+82
+00:06:22,280 --> 00:06:24,432
+Ngayon, ang Production URL.
+
+83
+00:06:24,432 --> 00:06:33,281
+Bago ako nag-Publish, sinubukan ko ito, at 404 ang sagot: the requested webhook POST weather is not registered.
+
+84
+00:06:33,281 --> 00:06:38,303
+Sabi ng hint, i-activate ang workflow gamit ang toggle sa taas.
+
+85
+00:06:38,303 --> 00:06:42,608
+Pero sa bersyong ito ng n8n, ang button ay Publish na.
+
+86
+00:06:43,458 --> 00:06:47,706
+Binigyan ng pangalan ang version, at nag-click ako ng Publish.
+
+87
+00:06:48,556 --> 00:06:50,051
+Workflow published.
+
+88
+00:06:50,051 --> 00:06:53,828
+Pwede ka nang tumawag sa production webhook URL.
+
+89
+00:06:53,828 --> 00:06:58,706
+Pansinin na hindi na lumalabas sa canvas ang mga tawag na ito.
+
+90
+00:06:58,706 --> 00:07:00,988
+Nasa Executions list na sila.
+
+91
+00:07:01,838 --> 00:07:04,871
+Sa PowerShell, may isa pang problema.
+
+92
+00:07:04,871 --> 00:07:11,840
+Tinype ko ang JSON na may mga quotes, at 422 ang sagot: Failed to parse request body.
+
+93
+00:07:11,840 --> 00:07:16,267
+Expected property name or curly bracket at position 1.
+
+94
+00:07:16,267 --> 00:07:19,382
+Nawala ang mga quotes sa loob ng JSON.
+
+95
+00:07:20,232 --> 00:07:25,121
+Ang ayos: lagyan ng backslash ang bawat quote sa loob ng JSON.
+
+96
+00:07:25,121 --> 00:07:29,064
+Ngayon, 200 na ang sagot, at kumpleto ang resulta.
+
+97
+00:07:29,914 --> 00:07:31,321
+Verification.
+
+98
+00:07:31,321 --> 00:07:37,167
+Pagkatapos mag-Publish, tumawag ako sa Production URL.
+
+99
+00:07:37,167 --> 00:07:40,956
+Manila: 28.1 degrees at 68 percent.
+
+100
+00:07:40,956 --> 00:07:43,662
+Cebu: 23.5 at 90 percent.
+
+101
+00:07:43,662 --> 00:07:50,158
+Ang una ay inabot ng 19 segundo, at ang Cebu ay 7.9 segundo.
+
+102
+00:07:50,158 --> 00:07:55,354
+Magkakaiba ang oras, depende sa API at sa model.
+
+103
+00:07:56,204 --> 00:08:00,468
+Ngayon, ang maling pangalan ng lungsod: Zzqxyw.
+
+104
+00:08:00,468 --> 00:08:06,092
+Bumalik ang 404 na may City not found, sa loob ng 1.2 segundo.
+
+105
+00:08:06,092 --> 00:08:08,723
+Hindi nag-crash ang workflow.
+
+106
+00:08:08,723 --> 00:08:11,444
+Ang daan ng False ang tumakbo.
+
+107
+00:08:12,294 --> 00:08:14,044
+Tama ba ang numero?
+
+108
+00:08:14,044 --> 00:08:17,637
+Tinawag ko ang Open-Meteo nang diretso.
+
+109
+00:08:17,637 --> 00:08:25,374
+Ang temperature ay 28.1, at ang humidity ay 68, parehong-pareho sa sagot ng webhook.
+
+110
+00:08:26,224 --> 00:08:30,226
+Sa Executions tab, makikita ang lahat ng takbo.
+
+111
+00:08:30,226 --> 00:08:41,296
+Nandito ang error na inabot ng 21.7 segundo, at ang pinakabagong takbo na City not found, na 1.136 segundo lang, sa daan ng False.
+
+112
+00:08:42,146 --> 00:08:43,279
+Tatlong paalala.
+
+113
+00:08:43,279 --> 00:08:49,297
+Una, ang Test URL ay isang tawag lang, at ang Production URL ay kailangang i-Publish.
+
+114
+00:08:49,297 --> 00:08:58,502
+Pangalawa, pwedeng mabagal o mag-timeout ang mga API, kaya gamitin ang Retry On Fail, at maglagay ng daan para sa maling pangalan.
+
+115
+00:08:58,502 --> 00:09:06,290
+Pangatlo, ibigay sa AI ang totoong numero, at i-check ang payo, dahil nag-iimbento pa rin ang maliit na model.
+
+116
+00:09:07,140 --> 00:09:10,210
+Ito ang buod ng mga totoong resulta.
+
+117
+00:09:10,210 --> 00:09:14,987
+Walang laman ang sagot kapag sa mismong node nag-Listen.
+
+118
+00:09:14,987 --> 00:09:17,545
+Isang tawag lang ang Test URL.
+
+119
+00:09:17,545 --> 00:09:20,104
+Nag-timeout ang geocoding API.
+
+120
+00:09:20,104 --> 00:09:24,283
+Hindi gumana ang Production URL bago mag-Publish.
+
+121
+00:09:24,283 --> 00:09:27,098
+At nasira ang JSON sa PowerShell.
+
+122
+00:09:27,098 --> 00:09:33,324
+Pagkatapos ng lahat ng ayos, tama ang Manila: 28.1 degrees at 68 percent.
+
+123
+00:09:34,174 --> 00:09:39,347
+Tanong ko sa iyo: anong API ang gusto mong ikonekta sa n8n mo?
+
+124
+00:09:39,347 --> 00:09:41,182
+I-comment mo sa ibaba.
+
+125
+00:09:47,032 --> 00:09:48,866
+Hindi pa tapos ang serye.
+
+126
+00:09:48,866 --> 00:09:55,542
+Sa Part 5, aayusin natin nang tama ang mga error, para hindi basta pumalya ang workflow mo.
+
+127
+00:09:55,542 --> 00:10:00,016
+I-click ang playlist sa screen para panoorin ang buong serye.
+
+128
+00:10:00,016 --> 00:10:02,584
+Nasa description ang workflow file.
+

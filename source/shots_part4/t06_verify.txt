@@ -1,0 +1,4 @@
+== webhook ==
+{"city":"Manila","temp":28.1,"humidity":68,"advice":"\"Be careful when going out because it's very hot (28.1 degrees) and humid (68 percent).\""}
+== open-meteo direct ==
+{"latitude":14.586995,"longitude":121.002785,"generationtime_ms":0.05125999450683594,"utc_offset_seconds":28800,"timezone":"Asia/Manila","timezone_abbreviation":"GMT+8","elevation":9.0,"current_units":{"time":"iso8601","interval":"seconds","temperature_2m":"°C","relative_humidity_2m":"%"},"current":{"time":"2026-11-15T21:30","interval":900,"temperature_2m":28.1,"relative_humidity_2m":68}}

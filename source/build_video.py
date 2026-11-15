@@ -36,6 +36,7 @@ SHOTS = HERE / "shots"
 SHOTS_INSTALL = HERE / "shots_install"
 SHOTS_PART2 = HERE / "shots_part2"
 SHOTS_PART3 = HERE / "shots_part3"
+SHOTS_PART4 = HERE / "shots_part4"
 TTS = HERE / "_tts"
 TTS.mkdir(exist_ok=True)
 FF = imageio_ffmpeg.get_ffmpeg_exe()
@@ -175,7 +176,7 @@ def draw_hl(d, rects, conv):
 
 
 def shot_img(name):
-    for base in (SHOTS_PART3, SHOTS_PART2, SHOTS_INSTALL, SHOTS):
+    for base in (SHOTS_PART4, SHOTS_PART3, SHOTS_PART2, SHOTS_INSTALL, SHOTS):
         if (base / f"{name}.jpg").exists():
             return Image.open(base / f"{name}.jpg").convert("RGB")
     raise FileNotFoundError(name)
@@ -566,12 +567,100 @@ def slide_p3_next():
     return img, d  # right half and bottom stay clear for the end-screen element
 
 
-SLIDES = {"p3_needs": slide_p3_needs, "p3_plan": slide_p3_plan, "p3_folder": slide_p3_folder, "p3_rules": slide_p3_rules, "p3_results": slide_p3_results, "p3_next": slide_p3_next, "p2_needs": slide_p2_needs, "chat_options": slide_chat_options, "embed_code": slide_embed_code, "p2_rules": slide_p2_rules, "p2_results": slide_p2_results, "p2_next": slide_p2_next, "hook_checks": slide_hook_checks, "requirements": slide_requirements, "account_tips": slide_account_tips, "ready": slide_ready, "agent_vs": slide_agent_vs, "needs": slide_needs, "system_message": slide_system, "results": slide_results, "next": slide_next}
+def _p4_cards(d, rows, y0, step, h, size_a=42, size_c=32):
+    y = y0
+    for n, a, c in rows:
+        d.rounded_rectangle((40, y, 1520, y + h), 30, fill=CARD)
+        d.ellipse((75, y + (h - 80) // 2, 155, y + (h - 80) // 2 + 80), fill=YELLOW)
+        d.text((115 - d.textlength(n, font=f(52)) / 2, y + (h - 80) // 2 + 10), n, font=f(52), fill=NAVY)
+        d.text((190, y + 20), a, font=f(size_a), fill=WHITE)
+        d.text((190, y + 20 + size_a + 26), c, font=f(size_c), fill=MUTED)
+        y += step
+
+
+def slide_p4_idea():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Webhook at API: ano ang pagkakaiba?", font=f(68), fill=WHITE)
+    d.rounded_rectangle((40, 250, 740, 700), 30, fill=CARD, outline=YELLOW, width=5)
+    d.text((70, 275), "Webhook", font=f(60), fill=YELLOW)
+    wrap_draw(d, "Isang address na naghihintay ng tawag. Kapag may tumawag, tatakbo ang workflow mo.", 70, 370, 36, WHITE, 640, 0.2)
+    d.text((70, 610), "Parang doorbell", font=f(40), fill=MUTED)
+    d.rounded_rectangle((780, 250, 1520, 700), 30, fill=CARD)
+    d.text((810, 275), "API", font=f(60), fill=YELLOW)
+    wrap_draw(d, "Bintana ng ibang serbisyo. Ikaw ang tatawag, at sasagot sila ng data.", 810, 370, 36, WHITE, 680, 0.2)
+    d.text((810, 610), "Open-Meteo: libre, walang key", font=f(40), fill=MUTED)
+    return img, d
+
+
+def slide_p4_needs():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Ang kailangan mo (libre lahat)", font=f(72), fill=WHITE)
+    _p4_cards(d, [("1", "n8n at Ollama na tumatakbo", "Galing sa Part 1: http://localhost:5678 at http://127.0.0.1:11434"),
+                  ("2", "PowerShell sa Windows 11", "May kasamang curl.exe. Hindi kailangang mag-install ng iba."),
+                  ("3", "Open-Meteo (weather API)", "Libre. Walang account, walang API key.")], 230, 168, 150)
+    d.text((40, 750), "Ang workflow file: weather-webhook.json (nasa description)", font=f(34), fill=YELLOW)
+    return img, d
+
+
+def slide_p4_plan():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Ang plano: 5 na hakbang", font=f(68), fill=WHITE)
+    boxes = [("Webhook", "tumatanggap ng city"), ("Find city", "HTTP Request: hanapin ang lungsod"), ("Get weather", "HTTP Request: temp at humidity"), ("Advice", "AI (Ollama): isang payo"), ("Reply", "Respond to Webhook")]
+    x = 40
+    for i, (a, b) in enumerate(boxes):
+        d.rounded_rectangle((x, 290, x + 270, 520), 28, fill=CARD, outline=YELLOW, width=5)
+        wrap_draw(d, a, x + 18, 320, 36, YELLOW, 240, 0.15)
+        wrap_draw(d, b, x + 18, 400, 28, MUTED, 240, 0.15)
+        if i < len(boxes) - 1:
+            d.polygon([(x + 280, 395), (x + 308, 380), (x + 308, 410)], fill=YELLOW)
+        x += 310
+    d.text((40, 590), "May isa pang daan: kapag walang nahanap na lungsod, 404 ang isasagot.", font=f(36), fill=MUTED)
+    return img, d
+
+
+def slide_p4_rules():
+    img, d = frame_base("BAGO MO GAMITIN")
+    d.text((40, 110), "3 paalala", font=f(76), fill=WHITE)
+    _p4_cards(d, [("1", "Test URL: isang tawag. Production URL: kailangan ng Publish", "Execute workflow ulit para sa bawat test. I-Publish bago tumawag sa production."),
+                  ("2", "Pwedeng mabagal ang API", "Retry On Fail (3 tries) at isang daan para sa maling lungsod."),
+                  ("3", "Ibigay sa AI ang totoong numero", "Pero i-check ang payo: nag-imbento ito ng ulan na wala sa datos.")], 235, 190, 165, size_a=40)
+    return img, d
+
+
+def slide_p4_results():
+    img, d = frame_base("BUOD NG TEST")
+    d.text((40, 110), "Mga totoong problema at ayos", font=f(72), fill=WHITE)
+    rows = [("Listen sa mismong Webhook node", "walang laman na sagot", "MALI", False), ("Test URL, pangalawang tawag", "404 not registered", "MALI", False),
+            ("Geocoding API", "timeout, 21.7 s", "MALI", False), ("Production URL bago mag-Publish", "404", "MALI", False),
+            ("JSON sa PowerShell", "422 parse error", "MALI", False), ("Lahat ng ayos: Manila", "28.1 C, 68%", "TAMA", True)]
+    y = 205
+    for a, b, c, ok in rows:
+        d.rounded_rectangle((40, y, 1520, y + 88), 24, fill=CARD)
+        d.text((70, y + 22), a, font=f(36), fill=WHITE)
+        d.text((830, y + 20), b, font=f(40), fill=YELLOW)
+        d.rounded_rectangle((1280, y + 12, 1480, y + 76), 32, fill=GREEN if ok else RED)
+        d.text((1380 - d.textlength(c, font=f(36)) / 2, y + 22), c, font=f(36), fill=NAVY)
+        y += 100
+    return img, d
+
+
+def slide_p4_next():
+    img, d = canvas()
+    d.text((100, 200), "Hindi pa tapos ang serye", font=f(60), fill=MUTED)
+    d.text((100, 280), "Part 5", font=f(140), fill=YELLOW)
+    wrap_draw(d, "Error handling: ayusin nang tama kapag pumalya ang workflow", 100, 450, 48, WHITE, 1000, 0.2)
+    d.rounded_rectangle((100, 640, 1100, 790), 36, fill=CARD, outline=YELLOW, width=4)
+    d.text((140, 662), "Workflow file: weather-webhook.json", font=f(44), fill=WHITE)
+    d.text((140, 725), "Nasa description", font=f(36), fill=MUTED)
+    return img, d  # right half and bottom stay clear for the end-screen element
+
+
+SLIDES = {"p4_idea": slide_p4_idea, "p4_needs": slide_p4_needs, "p4_plan": slide_p4_plan, "p4_rules": slide_p4_rules, "p4_results": slide_p4_results, "p4_next": slide_p4_next, "p3_needs": slide_p3_needs, "p3_plan": slide_p3_plan, "p3_folder": slide_p3_folder, "p3_rules": slide_p3_rules, "p3_results": slide_p3_results, "p3_next": slide_p3_next, "p2_needs": slide_p2_needs, "chat_options": slide_chat_options, "embed_code": slide_embed_code, "p2_rules": slide_p2_rules, "p2_results": slide_p2_results, "p2_next": slide_p2_next, "hook_checks": slide_hook_checks, "requirements": slide_requirements, "account_tips": slide_account_tips, "ready": slide_ready, "agent_vs": slide_agent_vs, "needs": slide_needs, "system_message": slide_system, "results": slide_results, "next": slide_next}
 
 
 def frame_slide(sc, sub=""):
     img, d = SLIDES[sc["slide"]]()
-    if sc["slide"] not in ("next", "ready", "p2_next", "p3_next"):
+    if sc["slide"] not in ("next", "ready", "p2_next", "p3_next", "p4_next"):
         subtitle(d, sub)
     return img
 

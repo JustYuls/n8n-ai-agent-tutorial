@@ -1,0 +1,2 @@
+{"city":"Manila","temp":28.1,"humidity":68,"advice":"\"Bring an umbrella to cover you from the rain.\""}
+HTTP 200  17.634093s

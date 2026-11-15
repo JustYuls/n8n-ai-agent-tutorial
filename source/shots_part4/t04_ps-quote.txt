@@ -1,0 +1,4 @@
+﻿--- PowerShell, quotes lang ---
+{"code":422,"message":"Failed to parse request body","hint":"Expected property name or '}' in JSON at position 1 (line 1 column 2)","stacktrace":"ResponseError: Failed to parse request body\n    at parseBody (D:\\MIT\\n8n-ai-agent-tutorial\\runtime\\node_modules\\n8n\\src\\middlewares\\body-parser.ts:112:10)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at parseRequestBody (D:\\MIT\\n8n-ai-agent-tutorial\\runtime\\node_modules\\n8n\\src\\webhooks\\webhook-helpers.ts:1774:2)\n    at Object.executeWebhook (D:\\MIT\\n8n-ai-agent-tutorial\\runtime\\node_modules\\n8n\\src\\webhooks\\webhook-helpers.ts:1139:27)"}
+HTTP 422
+

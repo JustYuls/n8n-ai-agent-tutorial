@@ -1,0 +1,12 @@
+0:00 Demo: isang tawag, may sagot
+0:31 Ano ang webhook at API
+1:38 Ang workflow at ang Webhook node
+2:30 Pagkakamali: ang Test URL
+3:22 Ang ayos: Execute workflow
+3:36 Retry On Fail: kapag nag-timeout ang API
+4:28 Pause and try
+4:53 Ang mga node: API, Edit Fields at AI
+6:21 Publish: ang Production URL
+7:01 Pagkakamali sa PowerShell
+7:29 Verification: Manila, Cebu at maling lungsod
+9:46 Susunod: Part 5, error handling

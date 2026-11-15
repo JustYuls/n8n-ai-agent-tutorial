@@ -1,0 +1,6 @@
+--- call 1 (test URL) ---
+
+HTTP 200  0.248243s
+--- call 2 (test URL again) ---
+{"code":404,"message":"The requested webhook \"weather\" is not registered.","hint":"Click the 'Execute workflow' button on the canvas, then try again. (In test mode, the webhook only works for one call after you click this button)","stacktrace":"ResponseError: The requested webhook \"weather\" is not registered.\n    at TestWebhooks.getWebhookMethods (D:\\MIT\\n8n-ai-agent-tutorial\\runtime\\node_modules\\n8n\\src\\webhooks\\test-webhooks.ts:320:37)\n    at TestWebhooks.executeWebhook (D:\\MIT\\n8n-ai-agent-tutorial\\runtime\\node_modules\\n8n\\src\\webhooks\\test-webhooks.ts:109:22)\n    at WebhookRequestHandler.handleRequest (D:\\MIT\\n8n-ai-agent-tutorial\\runtime\\node_modules\\n8n\\src\\webhooks\\webhook-request-handler.ts:77:21)\n    at D:\\MIT\\n8n-ai-agent-tutorial\\runtime\\node_modules\\n8n\\src\\webhooks\\webhook-request-handler.ts:321:3"}
+HTTP 404
