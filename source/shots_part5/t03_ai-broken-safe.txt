@@ -1,0 +1,2 @@
+{"city":"Manila","temp":27.6,"humidity":69,"advice":"Advice is not available right now (the AI did not answer)."}
+HTTP 200  2.084222s

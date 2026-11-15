@@ -37,6 +37,7 @@ SHOTS_INSTALL = HERE / "shots_install"
 SHOTS_PART2 = HERE / "shots_part2"
 SHOTS_PART3 = HERE / "shots_part3"
 SHOTS_PART4 = HERE / "shots_part4"
+SHOTS_PART5 = HERE / "shots_part5"
 TTS = HERE / "_tts"
 TTS.mkdir(exist_ok=True)
 FF = imageio_ffmpeg.get_ffmpeg_exe()
@@ -176,7 +177,7 @@ def draw_hl(d, rects, conv):
 
 
 def shot_img(name):
-    for base in (SHOTS_PART4, SHOTS_PART3, SHOTS_PART2, SHOTS_INSTALL, SHOTS):
+    for base in (SHOTS_PART5, SHOTS_PART4, SHOTS_PART3, SHOTS_PART2, SHOTS_INSTALL, SHOTS):
         if (base / f"{name}.jpg").exists():
             return Image.open(base / f"{name}.jpg").convert("RGB")
     raise FileNotFoundError(name)
@@ -655,12 +656,95 @@ def slide_p4_next():
     return img, d  # right half and bottom stay clear for the end-screen element
 
 
-SLIDES = {"p4_idea": slide_p4_idea, "p4_needs": slide_p4_needs, "p4_plan": slide_p4_plan, "p4_rules": slide_p4_rules, "p4_results": slide_p4_results, "p4_next": slide_p4_next, "p3_needs": slide_p3_needs, "p3_plan": slide_p3_plan, "p3_folder": slide_p3_folder, "p3_rules": slide_p3_rules, "p3_results": slide_p3_results, "p3_next": slide_p3_next, "p2_needs": slide_p2_needs, "chat_options": slide_chat_options, "embed_code": slide_embed_code, "p2_rules": slide_p2_rules, "p2_results": slide_p2_results, "p2_next": slide_p2_next, "hook_checks": slide_hook_checks, "requirements": slide_requirements, "account_tips": slide_account_tips, "ready": slide_ready, "agent_vs": slide_agent_vs, "needs": slide_needs, "system_message": slide_system, "results": slide_results, "next": slide_next}
+def slide_p5_idea():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Dalawang uri ng pagbagsak", font=f(72), fill=WHITE)
+    d.rounded_rectangle((40, 240, 740, 720), 30, fill=CARD, outline=YELLOW, width=5)
+    d.text((70, 265), "Inaasahan", font=f(58), fill=YELLOW)
+    wrap_draw(d, "Pwedeng pumalya ang AI o ang API. Hawakan ito sa loob ng workflow.", 70, 355, 36, WHITE, 640, 0.2)
+    d.text((70, 560), "On Error: Continue", font=fm(34), fill=GREEN)
+    d.text((70, 610), "(using error output)", font=fm(34), fill=GREEN)
+    d.text((70, 665), "+ isang fallback na sagot", font=f(34), fill=MUTED)
+    d.rounded_rectangle((780, 240, 1520, 720), 30, fill=CARD)
+    d.text((810, 265), "Hindi inaasahan", font=f(58), fill=YELLOW)
+    wrap_draw(d, "May pumalya na hindi mo naisip. Dapat kang malaman, at may tala.", 810, 355, 36, WHITE, 680, 0.2)
+    d.text((810, 560), "Error Trigger workflow", font=fm(34), fill=GREEN)
+    d.text((810, 610), "→ errors-log.csv", font=fm(34), fill=GREEN)
+    d.text((810, 665), "sa production lang tumatakbo", font=f(34), fill=MUTED)
+    return img, d
+
+
+def slide_p5_needs():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Ang kailangan mo (libre lahat)", font=f(72), fill=WHITE)
+    _p4_cards(d, [("1", "Ang workflow mula sa Part 4", "weather-webhook-safe: Webhook, Open-Meteo, AI advice, Reply"),
+                  ("2", "Ang Error logger workflow", "Error Trigger, Edit Fields, Convert to File, Write File to Disk"),
+                  ("3", "Isang folder na pinapayagan ng n8n", "Sa akin: runtime/study-files (tulad ng Part 3). Doon isusulat ang errors-log.csv")], 230, 168, 150)
+    d.text((40, 750), "Ang dalawang workflow file ay nasa description.", font=f(34), fill=YELLOW)
+    return img, d
+
+
+def slide_p5_plan():
+    img, d = frame_base("SETUP")
+    d.text((40, 110), "Ang plano: dalawang workflow", font=f(68), fill=WHITE)
+    rows = [("Weather Webhook (safe)", [("Advice", "AI, On Error: Continue"), ("Fallback advice", "Edit Fields"), ("Reply", "Respond to Webhook")], 305),
+            ("Error logger", [("Error Trigger", "kapag may nag-error"), ("Build line", "Edit Fields"), ("Convert to File", "text file"), ("Write File to Disk", "Append: errors-log.csv")], 545)]
+    for title, boxes, y in rows:
+        d.text((40, y - 55), title, font=f(40), fill=YELLOW)
+        x = 40
+        for i, (a, b) in enumerate(boxes):
+            d.rounded_rectangle((x, y, x + 330, y + 170), 26, fill=CARD, outline=YELLOW, width=4)
+            wrap_draw(d, a, x + 16, y + 20, 32, WHITE, 300, 0.15)
+            wrap_draw(d, b, x + 16, y + 100, 26, MUTED, 300, 0.15)
+            if i < len(boxes) - 1:
+                d.polygon([(x + 338, y + 85), (x + 362, y + 72), (x + 362, y + 98)], fill=YELLOW)
+            x += 372
+    return img, d
+
+
+def slide_p5_rules():
+    img, d = frame_base("BAGO MO GAMITIN")
+    d.text((40, 110), "3 paalala", font=f(76), fill=WHITE)
+    _p4_cards(d, [("1", "Hawakan sa loob ang inaasahang error", "On Error: Continue (using error output) at isang fallback na sagot."),
+                  ("2", "Itala ang hindi inaasahan sa Error workflow", "Tumatakbo lang ito sa production, hindi sa Execute workflow ng editor."),
+                  ("3", "Huwag magpanggap na tagumpay", "Ibalik ang totoong datos, sabihing walang payo, at itala ang error.")], 235, 190, 165, size_a=40)
+    return img, d
+
+
+def slide_p5_results():
+    img, d = frame_base("BUOD NG TEST")
+    d.text((40, 110), "Mga totoong resulta", font=f(72), fill=WHITE)
+    rows = [("Mali ang model, walang handler", "500 Error in workflow", "MALI", False), ("On Error: error output + fallback", "200 + fallback advice", "TAMA", True),
+            ("Pumalya ang API, walang error workflow", "500, walang tala", "MALI", False), ("Error workflow, Execute sa editor", "walang naitala", "MALI", False),
+            ("Error workflow, production call", "may linya sa log", "TAMA", True), ("Normal na tawag: Manila at Cebu", "200, walang bagong log", "TAMA", True)]
+    y = 205
+    for a, b, c, ok in rows:
+        d.rounded_rectangle((40, y, 1520, y + 88), 24, fill=CARD)
+        d.text((70, y + 22), a, font=f(36), fill=WHITE)
+        d.text((830, y + 20), b, font=f(40), fill=YELLOW)
+        d.rounded_rectangle((1280, y + 12, 1480, y + 76), 32, fill=GREEN if ok else RED)
+        d.text((1380 - d.textlength(c, font=f(36)) / 2, y + 22), c, font=f(36), fill=NAVY)
+        y += 100
+    return img, d
+
+
+def slide_p5_next():
+    img, d = canvas()
+    d.text((100, 200), "Hindi pa tapos ang serye", font=f(60), fill=MUTED)
+    d.text((100, 280), "Part 6", font=f(140), fill=YELLOW)
+    wrap_draw(d, "Schedule Trigger: kusang tatakbo ang workflow tuwing umaga", 100, 450, 48, WHITE, 1000, 0.2)
+    d.rounded_rectangle((100, 640, 1100, 790), 36, fill=CARD, outline=YELLOW, width=4)
+    d.text((140, 662), "Dalawang workflow file", font=f(44), fill=WHITE)
+    d.text((140, 725), "Nasa description", font=f(36), fill=MUTED)
+    return img, d  # right half and bottom stay clear for the end-screen element
+
+
+SLIDES = {"p5_idea": slide_p5_idea, "p5_needs": slide_p5_needs, "p5_plan": slide_p5_plan, "p5_rules": slide_p5_rules, "p5_results": slide_p5_results, "p5_next": slide_p5_next, "p4_idea": slide_p4_idea, "p4_needs": slide_p4_needs, "p4_plan": slide_p4_plan, "p4_rules": slide_p4_rules, "p4_results": slide_p4_results, "p4_next": slide_p4_next, "p3_needs": slide_p3_needs, "p3_plan": slide_p3_plan, "p3_folder": slide_p3_folder, "p3_rules": slide_p3_rules, "p3_results": slide_p3_results, "p3_next": slide_p3_next, "p2_needs": slide_p2_needs, "chat_options": slide_chat_options, "embed_code": slide_embed_code, "p2_rules": slide_p2_rules, "p2_results": slide_p2_results, "p2_next": slide_p2_next, "hook_checks": slide_hook_checks, "requirements": slide_requirements, "account_tips": slide_account_tips, "ready": slide_ready, "agent_vs": slide_agent_vs, "needs": slide_needs, "system_message": slide_system, "results": slide_results, "next": slide_next}
 
 
 def frame_slide(sc, sub=""):
     img, d = SLIDES[sc["slide"]]()
-    if sc["slide"] not in ("next", "ready", "p2_next", "p3_next", "p4_next"):
+    if sc["slide"] not in ("next", "ready", "p2_next", "p3_next", "p4_next", "p5_next"):
         subtitle(d, sub)
     return img
 

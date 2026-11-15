@@ -1,0 +1,9 @@
+0:00 Demo: sira ang AI, may sagot pa rin
+0:41 Dalawang uri ng pagbagsak
+1:46 Ang problema: pumalya ang AI
+2:44 On Error: Continue (using error output)
+4:11 Pangalawang uri: bumagsak ang API
+4:41 Error workflow: ang Error logger
+5:43 Pagkakamali: Execute workflow ay hindi nagla-log
+6:27 Verification: normal na tawag
+8:01 Susunod: Part 6, Schedule Trigger

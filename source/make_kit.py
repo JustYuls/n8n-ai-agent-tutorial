@@ -16,7 +16,7 @@ NOTES_LONG = ("Independent tutorial, not affiliated with n8n, Ollama or any AI p
               "and every result shown (including the mistakes) is the real output of the llama3.2:3b model. Narration is a synthetic voice (Filipino text-to-speech) and the presenter is a cartoon. "
               "The model is small and sometimes confused; use a larger model for more reliable results.")
 
-LINKS = [("PLAYLIST", "Playlist link"), ("VIDEO0", "Video 0 link (installation guide)"), ("VIDEO1", "Video 1 link (AI agent tutorial)"), ("VIDEO2", "Video 2 link (web chatbot)"), ("VIDEO3", "Video 3 link (Excel study tracker)"), ("VIDEO4", "Video 4 link (webhook and API)")]
+LINKS = [("PLAYLIST", "Playlist link"), ("VIDEO0", "Video 0 link (installation guide)"), ("VIDEO1", "Video 1 link (AI agent tutorial)"), ("VIDEO2", "Video 2 link (web chatbot)"), ("VIDEO3", "Video 3 link (Excel study tracker)"), ("VIDEO4", "Video 4 link (webhook and API)"), ("VIDEO5", "Video 5 link (error handling)")]
 
 ITEMS = [
     dict(id="00", kind="long", video="videos/00_n8n-installation-guide-tagalog.mp4", thumb="thumbnails/00_n8n-installation-guide-tagalog.png",
@@ -128,12 +128,36 @@ ITEMS = [
                    "End screen (last 15 to 20 s): the playlist, plus Subscribe. The right half of the last slide is clear",
                    "Upload the thumbnail and captions/ .srt (Subtitles, English)", "Push workflow/weather-webhook.json to GitHub before release so the description link works",
                    "Set the Related video of each Short to this video"]),
+    dict(id="05", kind="long", video="videos/05_n8n-error-handling-tagalog.mp4", thumb="thumbnails/05_n8n-error-handling-tagalog.png",
+         chapters="chapters/05_n8n-error-handling-tagalog.txt", name="Video 5: n8n Error Handling Tutorial (Tagalog)",
+         title="n8n Error Handling Tutorial (Tagalog): On Error Fallback and Error Trigger Log",
+         hook="Learn how to handle errors in n8n (Tagalog): keep answering when the AI fails with On Error, Continue (using error output) and a fallback, and write every unexpected failure to a CSV log with an Error Trigger workflow. Free and local.",
+         learn=["Two kinds of failure: the ones you expect (AI or API down) and the ones you do not",
+                "On Error: Stop Workflow, Continue, and Continue (using error output), and how a Fallback advice node keeps the real temperature in the answer",
+                "An Error logger workflow (Error Trigger, Edit Fields, Convert to File, Write File to Disk) and how to link it in the workflow settings",
+                "Real mistakes: a wrong model name giving 500 Error in workflow, a broken API host with no log, and the error workflow not running on test executions"],
+         resources=["Not installed yet? Setup guide: {{VIDEO0}}", "Part 4, the webhook and API workflow: {{VIDEO4}}", "Part 3, writing files and the allowed folder: {{VIDEO3}}",
+                    "Workflow JSON (weather-webhook-safe and error-logger): https://github.com/JustYuls/n8n-ai-agent-tutorial/tree/main/workflow",
+                    "n8n error handling docs: https://docs.n8n.io/flow-logic/error-handling/", "Playlist: " + SERIES + ": {{PLAYLIST}}"],
+         notes=("Independent guide, not affiliated with n8n or Ollama. Tested with n8n 2.47.5 on my Windows 11 PC (7 GB RAM, no graphics card); the n8n screens and every terminal output are real, including the mistakes. "
+                "I broke things on purpose (a wrong model name and a wrong API host) to show the failures. In my test the error workflow did not run for a test execution, only for a production call. "
+                "Import the workflow files, pick your own Ollama account, and set the log file path inside the folder n8n is allowed to write (see Part 3). "
+                "The advice comes from a small local model and can be wrong. Narration is a synthetic voice (Filipino text-to-speech) and the presenter is a cartoon."),
+         hashtags="#n8n #ErrorHandling #Tagalog",
+         tags=["n8n error handling", "n8n error trigger tutorial", "n8n on error continue using error output", "n8n error workflow", "n8n fallback", "n8n log errors to file",
+               "n8n tutorial for beginners tagalog", "n8n webhook error", "SirYuls TV"],
+         pinned="The two workflow files are on GitHub, link in the description. Remember: the error workflow only ran on production calls in my test, and a fallback should still tell the caller the truth. "
+                "What error do you want to handle in your own workflow? Tell me below. Full playlist: {{PLAYLIST}}",
+         settings=["Add to the playlist as video 5", "Not made for kids", "Altered or synthetic content: yes (synthetic voice, cartoon presenter)",
+                   "End screen (last 15 to 20 s): the playlist, plus Subscribe. The right half of the last slide is clear",
+                   "Upload the thumbnail and captions/ .srt (Subtitles, English)", "Push workflow/weather-webhook-safe.json and workflow/error-logger.json to GitHub before release so the description link works",
+                   "Set the Related video of each Short to this video"]),
 ]
 
 PLAYLIST = dict(
     title=SERIES,
     description=("Learn n8n step by step in Tagalog: build AI agents, put them on your website and save results to Excel, and automate your study or work.\n\n"
-                 "Watch in order:\n0. How to Install n8n Locally on Windows 11 (Tagalog)\n1. n8n AI Agent Tutorial for Beginners (Tagalog)\n2. n8n Chatbot for Your Website (Tagalog)\n3. n8n AI Agent to Excel: Study Tracker (Tagalog)\n4. n8n Webhook Tutorial: Call a Free Weather API (Tagalog)\n\n" + NOTES_LONG),
+                 "Watch in order:\n0. How to Install n8n Locally on Windows 11 (Tagalog)\n1. n8n AI Agent Tutorial for Beginners (Tagalog)\n2. n8n Chatbot for Your Website (Tagalog)\n3. n8n AI Agent to Excel: Study Tracker (Tagalog)\n4. n8n Webhook Tutorial: Call a Free Weather API (Tagalog)\n5. n8n Error Handling Tutorial (Tagalog)\n\n" + NOTES_LONG),
 )
 
 

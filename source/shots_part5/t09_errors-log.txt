@@ -1,0 +1,1 @@
+"2026-11-15 22:30:10","Weather Webhook (safe)","Get weather","The connection cannot be established, this usually occurs due to an incorrect host (domain) value"

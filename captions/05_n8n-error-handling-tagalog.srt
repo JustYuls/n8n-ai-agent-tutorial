@@ -1,0 +1,408 @@
+1
+00:00:00,350 --> 00:00:01,585
+Tingnan mo ito.
+
+2
+00:00:01,585 --> 00:00:07,019
+Sinadya kong sirain ang AI ko, gamit ang maling pangalan ng model.
+
+3
+00:00:07,019 --> 00:00:19,947
+Pero ang tumawag ay nakakuha pa rin ng sagot: ang totoong temperatura, 27.6 degrees, ang humidity na 69 percent, at malinaw na mensahe na walang payo ngayon.
+
+4
+00:00:19,947 --> 00:00:21,758
+HTTP 200, hindi error.
+
+5
+00:00:22,608 --> 00:00:33,408
+At kapag ang weather API naman ang bumagsak, may kusang isinulat na linya sa errors log: ang oras, ang workflow, ang node na pumalya, at ang mensahe ng error.
+
+6
+00:00:33,408 --> 00:00:34,912
+Walang nag-type niyan.
+
+7
+00:00:34,912 --> 00:00:41,064
+Sa video na ito, gagawin natin pareho, at ipapakita ko rin ang mga totoong pagkakamali ko.
+
+8
+00:00:41,914 --> 00:00:44,050
+May dalawang uri ng pagbagsak.
+
+9
+00:00:44,050 --> 00:00:47,966
+Ang una ay inaasahan: pwedeng pumalya ang AI o ang API.
+
+10
+00:00:47,966 --> 00:00:56,723
+Hahawakan natin ito sa loob mismo ng workflow, gamit ang On Error, Continue using error output, at isang fallback na sagot.
+
+11
+00:00:56,723 --> 00:01:01,280
+Ang pangalawa ay hindi inaasahan: may pumalyang hindi mo naisip.
+
+12
+00:01:01,280 --> 00:01:07,474
+Dito natin gagamitin ang Error workflow, na may Error Trigger, para itala ang problema.
+
+13
+00:01:08,324 --> 00:01:15,298
+Ang kailangan mo ay ang workflow mula sa Part 4, at isang Error logger workflow na gagawin natin.
+
+14
+00:01:15,298 --> 00:01:21,769
+Kailangan din ng folder na pinapayagan ng n8n na sulatan, tulad ng ginawa natin sa Part 3.
+
+15
+00:01:21,769 --> 00:01:24,932
+Nasa description ang dalawang workflow file.
+
+16
+00:01:25,782 --> 00:01:26,802
+Ito ang plano.
+
+17
+00:01:26,802 --> 00:01:33,213
+Sa unang workflow, ang Advice node ay magkakaroon ng dalawang labasan: Success at Error.
+
+18
+00:01:33,213 --> 00:01:38,241
+Ang Error ay mapupunta sa Fallback advice, at pagkatapos ay sa Reply.
+
+19
+00:01:38,241 --> 00:01:46,182
+Sa pangalawang workflow, ang Error logger: Error Trigger, Build line, Convert to File, at Write File to Disk.
+
+20
+00:01:47,032 --> 00:01:54,238
+Ito ang workflow mula sa Part 4, pero ang Ollama Chat Model ay may pangalan ng model na wala sa Ollama.
+
+21
+00:01:54,238 --> 00:01:56,896
+Parang hindi pa na-download ang model.
+
+22
+00:01:57,746 --> 00:02:01,192
+Tumawag ako sa test URL, at pumula ang Advice.
+
+23
+00:02:01,192 --> 00:02:04,189
+Problem in node Advice: model not found.
+
+24
+00:02:04,189 --> 00:02:10,706
+Totoo ito: ganito ang itsura kapag hindi pa na-download ang model, o mali ang pangalan.
+
+25
+00:02:11,556 --> 00:02:15,371
+Ito ang nakuha ng tumatawag sa production URL.
+
+26
+00:02:15,371 --> 00:02:20,016
+Error in workflow, HTTP 500, pagkalipas ng 12.7 segundo.
+
+27
+00:02:20,016 --> 00:02:26,402
+Wala siyang temperatura, kahit nakuha na ng workflow ang totoong temperatura.
+
+28
+00:02:26,402 --> 00:02:28,476
+At wala siyang paliwanag.
+
+29
+00:02:29,326 --> 00:02:37,525
+Sa Executions, makikita ang mga pulang takbo: 12.6 segundo, 3.3 segundo, at 32.7 segundo.
+
+30
+00:02:37,525 --> 00:02:44,158
+Nandiyan ang error, pero ikaw lang ang makakakita nito kung bubuksan mo.
+
+31
+00:02:45,008 --> 00:02:46,946
+Buksan natin ang Advice.
+
+32
+00:02:46,946 --> 00:02:51,872
+Ito ang error: model not found, original error ResponseError.
+
+33
+00:02:52,722 --> 00:02:55,310
+Sa Settings ng node, may On Error.
+
+34
+00:02:55,310 --> 00:03:01,170
+Ang default ay Stop Workflow: tumigil ang buong workflow, kaya 500 ang sagot.
+
+35
+00:03:02,020 --> 00:03:03,976
+May tatlong pagpipilian.
+
+36
+00:03:03,976 --> 00:03:05,117
+Stop Workflow.
+
+37
+00:03:05,117 --> 00:03:10,415
+Continue, na ipapasa ang mensahe ng error bilang regular na item.
+
+38
+00:03:10,415 --> 00:03:17,017
+At Continue using error output, na magbibigay ng dagdag na labasan para sa error.
+
+39
+00:03:17,017 --> 00:03:18,892
+Ito ang pipiliin natin.
+
+40
+00:03:19,742 --> 00:03:23,207
+Pagkatapos ng test, tingnan ang Error Branch.
+
+41
+00:03:23,207 --> 00:03:28,058
+Dala nito ang city, temp, at humidity, at ang mensahe ng error.
+
+42
+00:03:28,058 --> 00:03:30,830
+Kaya hindi nawala ang totoong datos.
+
+43
+00:03:31,680 --> 00:03:35,040
+Sa canvas, ang Advice ay may Success at Error.
+
+44
+00:03:35,040 --> 00:03:41,760
+Ang Error ay nakakabit sa Fallback advice, at ang Fallback ay sa Reply, kapareho ng Success.
+
+45
+00:03:42,610 --> 00:03:47,241
+Ang Fallback advice ay Edit Fields na may isang field lang: text.
+
+46
+00:03:47,241 --> 00:03:52,085
+Ang laman: Advice is not available right now, the AI did not answer.
+
+47
+00:03:52,085 --> 00:03:58,426
+Pareho ang pangalan ng field sa output ng Advice, kaya gumagana ang Reply para sa dalawa.
+
+48
+00:03:59,276 --> 00:04:00,297
+Subukan ulit.
+
+49
+00:04:00,297 --> 00:04:05,952
+Workflow executed successfully, kahit pula pa rin ang Ollama Chat Model.
+
+50
+00:04:05,952 --> 00:04:10,508
+Ang daan ng Error ang tumakbo, papunta sa Fallback advice.
+
+51
+00:04:11,358 --> 00:04:13,449
+Pangalawang uri ng pagbagsak.
+
+52
+00:04:13,449 --> 00:04:16,766
+Sinira ko ang URL ng weather API, maling host.
+
+53
+00:04:16,766 --> 00:04:24,913
+Pumula ang Get weather: the connection cannot be established, this usually occurs due to an incorrect host value.
+
+54
+00:04:24,913 --> 00:04:28,446
+Ibang problema ito, at hindi natin ito inaasahan.
+
+55
+00:04:29,296 --> 00:04:32,759
+Production call ulit: Error in workflow, 500.
+
+56
+00:04:32,759 --> 00:04:36,530
+At pagtingin ko sa folder, wala pang bagong file.
+
+57
+00:04:36,530 --> 00:04:41,224
+Walang nakakaalam na may pumalya, maliban sa Executions list.
+
+58
+00:04:42,074 --> 00:04:47,351
+Pansinin ang checklist na lumabas sa n8n pagkatapos mag-Publish.
+
+59
+00:04:47,351 --> 00:04:50,484
+Ang una ay Set up error notifications.
+
+60
+00:04:50,484 --> 00:04:52,298
+Ito ang gagawin natin.
+
+61
+00:04:53,148 --> 00:04:55,521
+Ito ang Error logger workflow.
+
+62
+00:04:55,521 --> 00:04:58,368
+Ang unang node ay ang Error Trigger.
+
+63
+00:04:58,368 --> 00:05:04,932
+Pagkatapos: Build line, Convert to File, at Write File to Disk, tulad ng sa Part 3.
+
+64
+00:05:05,782 --> 00:05:17,014
+Ito ang laman ng Error Trigger sa isang totoong takbo: ang execution id, ang URL ng takbong nag-error, at ang error mismo, kasama ang pangalan ng node at ang mensahe.
+
+65
+00:05:17,864 --> 00:05:26,732
+Ang Build line ay bumubuo ng isang linya ng CSV: oras sa Asia Manila, pangalan ng workflow, ang node na pumalya, at ang mensahe.
+
+66
+00:05:26,732 --> 00:05:32,552
+Tulad sa Part 3, nakapaloob sa quotes ang bawat halaga, at may bagong linya sa dulo.
+
+67
+00:05:33,402 --> 00:05:41,321
+Para magamit ito, buksan ang Settings ng pangunahing workflow, at piliin ang Error logger sa Error Workflow.
+
+68
+00:05:41,321 --> 00:05:42,714
+Pagkatapos, i-save.
+
+69
+00:05:43,564 --> 00:05:48,128
+Sinubukan ko sa test URL, na may nakakabit nang error workflow.
+
+70
+00:05:48,128 --> 00:05:52,112
+Pumalya ang workflow, 500, at wala pa ring bagong file.
+
+71
+00:05:52,112 --> 00:05:56,821
+Sa pagsubok na ito, hindi tumakbo ang error workflow sa test run.
+
+72
+00:05:56,821 --> 00:05:59,212
+Kailangan ng production na tawag.
+
+73
+00:06:00,062 --> 00:06:01,988
+Ngayon, production call.
+
+74
+00:06:01,988 --> 00:06:05,199
+Error in workflow pa rin ang sagot, 500.
+
+75
+00:06:05,199 --> 00:06:08,650
+Pero tingnan ang folder: may errors log na.
+
+76
+00:06:08,650 --> 00:06:14,990
+Nandoon ang linya: ang oras, Weather Webhook safe, Get weather, at ang mensahe.
+
+77
+00:06:15,840 --> 00:06:19,761
+Sa Executions ng Error logger, makikita ang mga takbo.
+
+78
+00:06:19,761 --> 00:06:27,168
+Dalawa ang nakalista: ang isa ay galing sa pagsubok ko bago mag-record, at ang isa ay sa tawag kanina.
+
+79
+00:06:28,018 --> 00:06:29,233
+Verification.
+
+80
+00:06:29,233 --> 00:06:33,624
+Ibinalik ko ang tamang model at ang tamang URL.
+
+81
+00:06:33,624 --> 00:06:36,894
+Manila: 27.5 degrees at 69 percent.
+
+82
+00:06:36,894 --> 00:06:39,790
+Cebu: 23 degrees at 93 percent.
+
+83
+00:06:39,790 --> 00:06:41,005
+Parehong 200.
+
+84
+00:06:41,005 --> 00:06:48,386
+At ang errors log ay isa pa ring linya: walang bagong tala, dahil walang error.
+
+85
+00:06:48,386 --> 00:06:55,954
+Pansinin na ang payo para sa Cebu ay payong na naman, kahit walang ulan sa datos.
+
+86
+00:06:56,804 --> 00:06:57,931
+Tatlong paalala.
+
+87
+00:06:57,931 --> 00:07:06,028
+Una, hawakan sa loob ng workflow ang mga inaasahang error, gamit ang Continue using error output at isang fallback.
+
+88
+00:07:06,028 --> 00:07:13,702
+Pangalawa, itala ang hindi inaasahan sa isang Error workflow, at tandaan na sa production lang ito tumatakbo.
+
+89
+00:07:13,702 --> 00:07:21,236
+Pangatlo, huwag magpanggap na tagumpay: ibalik ang totoong datos, sabihing walang payo, at itala ang error.
+
+90
+00:07:22,086 --> 00:07:24,981
+Ito ang buod ng mga totoong resulta.
+
+91
+00:07:24,981 --> 00:07:28,117
+Sa maling model na walang handler, 500.
+
+92
+00:07:28,117 --> 00:07:32,620
+Sa error output at fallback, 200 na may fallback advice.
+
+93
+00:07:32,620 --> 00:07:37,927
+Nang pumalya ang API na walang error workflow, 500 at walang tala.
+
+94
+00:07:37,927 --> 00:07:40,822
+Sa Execute workflow, walang naitala.
+
+95
+00:07:40,822 --> 00:07:43,797
+Sa production call, may linya sa log.
+
+96
+00:07:43,797 --> 00:07:47,094
+At sa normal na tawag, walang bagong log.
+
+97
+00:07:47,944 --> 00:07:53,790
+Tanong ko sa iyo: anong error ang gusto mong matutunang hawakan sa n8n mo?
+
+98
+00:07:53,790 --> 00:07:55,528
+I-comment mo sa ibaba.
+
+99
+00:08:01,378 --> 00:08:03,205
+Hindi pa tapos ang serye.
+
+100
+00:08:03,205 --> 00:08:10,146
+Sa Part 6, gagawin nating kusang tumakbo ang workflow tuwing umaga, gamit ang Schedule Trigger.
+
+101
+00:08:10,146 --> 00:08:14,603
+I-click ang playlist sa screen para panoorin ang buong serye.
+
+102
+00:08:14,603 --> 00:08:17,818
+Nasa description ang dalawang workflow file.
+

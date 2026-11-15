@@ -1,0 +1,6 @@
+== Manila ==
+{"city":"Manila","temp":27.5,"humidity":69,"advice":"\"Wear light clothes and bring water to stay cool outside.\""}
+HTTP 200  23.888955s
+== Cebu ==
+{"city":"Cebu","temp":23,"humidity":93,"advice":"\"Bring an umbrella to protect yourself from the rain, even though it's 23 degrees Celsius and only 93 percent humid.\""}
+HTTP 200  8.544356s
